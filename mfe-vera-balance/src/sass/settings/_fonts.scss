@@ -1,0 +1,12 @@
+@use './colors' as *;
+
+p {
+	font-size: 18px;
+	color: $black;
+	font-weight: 400;
+}
+
+h1 {
+	color: $black;
+	font-size: 28px;
+}

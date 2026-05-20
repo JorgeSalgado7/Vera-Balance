@@ -1,0 +1,30 @@
+@use '../config/colors' as *;
+
+.vb_group_input {
+	width: 100%;
+
+	label {
+		font-weight: 600;
+		margin-bottom: 6px;
+		display: flex;
+		width: 100%;
+	}
+
+	.ant-input {
+		height: 35px;
+		width: 100%;
+		padding: 6px 12px;
+		border-color: $soft_pink;
+
+		&:focus {
+			border-color: $soft_pink;
+			box-shadow: 0 0 5px 1px $soft_pink;
+		}
+
+		&::placeholder {
+			color: $dark_grey;
+		}
+
+	}
+
+}

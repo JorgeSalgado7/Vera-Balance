@@ -1,0 +1,47 @@
+@use '../../../scss/mixins/flex_mixin' as *;
+@use '../../../scss/config/colors' as *;
+
+.patients {
+	width: 100%;
+	@include flex_mixin($direction: column);
+	
+	&__table {
+		width: 100%;
+
+		&__header {
+			@include flex-mixin($align: center, $justify: space-between);
+			margin-bottom: 15px;
+
+			.vb_btn {
+
+				i {
+					margin: 0;
+				}
+
+			}
+
+		}
+
+		&__tools {
+			@include flex-mixin($align: center, $justify: space-between, $wrap: flex-wrap);
+			margin-bottom: 30px;
+
+			&__count {
+				width: 300px;
+
+				strong {
+					color: $pink;
+					font-weight: 600;
+				}
+
+			}
+
+			.vb_group_input {
+				width: 300px;
+			}
+
+		}
+
+	}
+
+}

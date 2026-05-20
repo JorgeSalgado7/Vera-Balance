@@ -1,0 +1,47 @@
+@use '../../../scss/mixins/flex_mixin' as *;
+@use '../../../scss/config/colors' as *;
+
+.patients_create {
+	width: 100%;
+
+	&__card {
+
+		h2 {
+			margin-bottom: 12px;
+		}
+
+		&__form {
+			width: 100%;
+			margin-top: 30px;
+
+			&__title {
+				width: 100%;
+				@include flex-mixin($align: center);
+
+				&--step {
+					width: 30px;
+					height: 30px;
+					border-radius: 100%;
+					background-color: $soft_green;
+					color: $black;
+					@include flex-mixin($align: center, $justify: center);
+					margin-right: 12px;
+					font-size: 18px;
+					font-weight: 700;
+				}
+			
+			}
+
+			&__grid {
+				width: 100%;
+				margin-top: 15px;
+				display: grid;
+				grid-template-columns: repeat(1, 1fr);
+				gap: 15px;
+			}
+
+		}
+
+	}
+
+}

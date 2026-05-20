@@ -1,0 +1,13 @@
+@use '../../config/colors' as *;
+
+.dashboard_layout {
+	background-color: $warm_white;
+	width: 100%;
+	min-height: 100dvh;
+
+	@media (min-width: 768px){
+		width: calc(100% - 250px);
+		margin-left: 250px;
+	}
+
+}

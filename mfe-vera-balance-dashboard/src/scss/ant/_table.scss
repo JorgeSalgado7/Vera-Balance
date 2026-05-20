@@ -1,0 +1,40 @@
+@use '../config/colors' as *;
+
+.ant-table-wrapper {
+
+	th {
+		background-color: $soft_pink!important;
+		color: $white!important;
+		text-align: center!important;
+	}
+
+	td {
+		text-align: center !important;
+	}
+
+	.ant-pagination {
+
+		&-item {
+			border-color: $dark_grey;
+
+			&:hover {
+				border-color: $pink;
+			}
+			
+			a {
+				color: $pink !important;
+			}
+
+		}
+	
+		button {
+
+			svg {
+				fill: $pink;
+			}
+
+		}
+
+	}
+
+}

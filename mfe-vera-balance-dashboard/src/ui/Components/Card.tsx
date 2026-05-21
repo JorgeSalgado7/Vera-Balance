@@ -1,4 +1,4 @@
-import type { CarddI } from '../Layouts/Interfaces/Components/card.interface'
+import type { CarddI } from '../Interfaces/Components/card.interface'
 
 export const Card = ({ children, customClass }: CarddI) => {
 	return (

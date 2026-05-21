@@ -1,5 +1,5 @@
 import { Input } from 'antd';
-import type { InputI } from '../interfaces/input.interface';
+import type { InputI } from '../../Interfaces/Inputs/input.interface';
 
 export const InputText = ({ label, placeholder }: InputI) => {
 	return (

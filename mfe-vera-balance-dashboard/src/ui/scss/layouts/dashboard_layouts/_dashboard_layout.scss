@@ -1,7 +1,7 @@
-@use '../../config/colors' as *;
+@use '../../config/colors';
 
 .dashboard_layout {
-	background-color: $warm_white;
+	background-color: colors.$warm_white;
 	width: 100%;
 	min-height: 100dvh;
 

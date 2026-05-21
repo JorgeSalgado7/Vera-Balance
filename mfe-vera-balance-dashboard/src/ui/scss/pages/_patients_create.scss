@@ -1,0 +1,106 @@
+@use '../mixins/flex_mixin' as *;
+@use '../config/colors' as *;
+
+.patients_create {
+	width: 100%;
+
+	&__card {
+
+		h2 {
+			margin-bottom: 12px;
+		}
+
+		&__form {
+			width: 100%;
+			margin-top: 30px;
+
+			&__title {
+				width: 100%;
+				@include flex-mixin($align: center);
+
+				&--step {
+					width: 30px;
+					height: 30px;
+					border-radius: 100%;
+					background-color: $soft_green;
+					color: $black;
+					@include flex-mixin($align: center, $justify: center);
+					margin-right: 12px;
+					font-size: 18px;
+					font-weight: 700;
+				}
+			
+			}
+
+			&__grid {
+				width: 100%;
+				margin-top: 12px;
+				display: grid;
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+				gap: 12px;
+				
+				@media (min-width: 992px) {
+					grid-template-columns: repeat(4, minmax(0, 1fr));
+				}
+
+				&__item {
+					grid-column: span 2;
+
+					@media (min-width: 992px){
+						grid-column: span 2;
+
+						&:nth-child(1){
+							grid-column: span 4;
+						}
+
+						&:nth-child(2){
+							grid-column: span 1;
+						}
+
+						&:nth-child(3){
+							grid-column: span 3;
+						}
+
+					}
+
+					@media (min-width: 1200px) {
+						grid-column: span 1;
+
+						&:nth-child(1){
+							grid-column: span 2;
+						}
+
+						&:nth-child(2){
+							grid-column: span 1;
+						}
+
+						&:nth-child(3){
+							grid-column: span 1;
+						}
+
+					}
+
+					&--empty {
+						display: none;
+
+						@media (min-width: 1200px) {
+							display: block;
+						}
+					}
+
+					&--half {
+						grid-column: span 1;
+					}
+
+					&--2_3 {
+						grid-column: span 2;
+					}
+				}
+
+			}
+
+		}
+
+	}
+
+}

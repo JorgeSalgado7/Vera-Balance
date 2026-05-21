@@ -1,9 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router";
 
 //* Pages
-import { Dashboard } from "./ui/Dashboard";
-import { Patients } from "./features/patients/pages/Patients";
-import { CreatePatient } from "./features/patients/pages/CreatePatient";
+import { Dashboard } from "../ui/Dashboard";
+import { Patients } from "../ui/pages/Patients";
+import { CreatePatient } from "../ui/pages/CreatePatient";
 
 export const PageRouter = () => {
 	return (

@@ -1,6 +1,6 @@
 //* Types
 import { HeaderLayout } from "./HeaderLayout"
-import type { DashboardI } from "./Interfaces/Dashboard/dashboard.interface"
+import type { DashboardI } from "../Interfaces/Dashboard/dashboard.interface"
 import { SidebarMenu } from "./SidebarMenu"
 
 //*Components

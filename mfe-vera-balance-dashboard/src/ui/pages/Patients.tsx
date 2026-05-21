@@ -1,10 +1,7 @@
-//* Style
-import '../scss/patients.scss'
-
 //* Components
-import { DasboardLayout } from "../../../ui/Layouts/DasboardLayout"
-import { InputText } from '../../../ui/Components/Inputs/InputText'
-import { Card } from '../../../ui/Components/Card';
+import { DasboardLayout } from "../Layouts/DasboardLayout"
+import { InputText } from '../Components/Inputs/InputText'
+import { Card } from '../Components/Card';
 
 import { Table } from 'antd';
 import { Link } from 'react-router';

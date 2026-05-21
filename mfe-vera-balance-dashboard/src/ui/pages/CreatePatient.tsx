@@ -76,6 +76,14 @@ export const CreatePatient = () => {
 								/>
 							</div>
 
+							<div className="patients_create__card__form__grid__item">
+								<InputText 
+									label='Dirección'
+									placeholder='Ej: Colmena, Nicolás Romero, Edo. Mex'
+								/>
+							</div>
+
+
 						</section>
 
 					</form>

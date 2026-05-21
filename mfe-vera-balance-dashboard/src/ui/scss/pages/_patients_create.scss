@@ -1,5 +1,5 @@
 @use '../mixins/flex_mixin' as *;
-@use '../config/colors' as *;
+@use '../config/colors';
 
 .patients_create {
 	width: 100%;
@@ -7,7 +7,7 @@
 	&__card {
 
 		h2 {
-			margin-bottom: 12px;
+			margin-bottom: 12px!important;
 		}
 
 		&__form {
@@ -22,8 +22,8 @@
 					width: 30px;
 					height: 30px;
 					border-radius: 100%;
-					background-color: $soft_green;
-					color: $black;
+					background-color: colors.$soft_pink;
+					color: colors.$white;
 					@include flex-mixin($align: center, $justify: center);
 					margin-right: 12px;
 					font-size: 18px;
@@ -37,7 +37,7 @@
 				margin-top: 12px;
 				display: grid;
 				grid-template-columns: repeat(2, minmax(0, 1fr));
-				gap: 12px;
+				gap: 24px;
 				
 				@media (min-width: 992px) {
 					grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -59,6 +59,10 @@
 
 						&:nth-child(3){
 							grid-column: span 3;
+						}
+
+						&:nth-child(8) {
+							grid-column: span 4;
 						}
 
 					}

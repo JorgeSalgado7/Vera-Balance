@@ -60,6 +60,10 @@
 			@include flex_mixin($align: flex-start, $justify: flex-start, $direction: column);
 		}
 
+		p {
+			margin-top: 12px;
+		}
+
 	}
 
 	&__avatar {
@@ -70,8 +74,10 @@
 		border: 1px solid colors.$pink;
 		overflow: hidden;
 		@include flex_mixin($align: center, $justify: center);
-		font-size: 18px;
-		color: colors.$pink;
+		font-size: 20px;
+		font-weight: 600;
+		color: colors.$white;
+		background-color: colors.$pink;
 	}
 
 }

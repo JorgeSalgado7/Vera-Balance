@@ -13,12 +13,11 @@
 		height: 35px;
 		width: 100%;
 		padding: 6px 12px;
-		border-color: $soft_pink;
 		transition: 0.3s;
 
-		&:focus {
+		&:focus,
+		&:hover {
 			border-color: $soft_pink;
-			box-shadow: 0 0 5px 1px $soft_pink;
 		}
 
 		&::placeholder {

@@ -9,6 +9,7 @@
 @use './components/card';
 @use './components/inputs/input';
 @use './components/inputs/select';
+@use './components/inputs/picker';
 
 //* Layouts
 @use './layouts/dashboard_layouts/dashboard_layout';
@@ -29,5 +30,10 @@
 }
 
 .container {
-	padding: 0 30px;
+	padding: 30px;
+
+	@media(min-width: 768px) {
+		padding: 0 30px 30px;
+	}
+
 }

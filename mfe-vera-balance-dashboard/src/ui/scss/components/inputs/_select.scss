@@ -17,9 +17,9 @@
 
 		&:focus,
 		&:hover,
-		&:active {
+		&:active,
+		&-focused {
 			border-color: $soft_pink!important;
-			box-shadow: none!important;
 		}
 
 		&::placeholder {

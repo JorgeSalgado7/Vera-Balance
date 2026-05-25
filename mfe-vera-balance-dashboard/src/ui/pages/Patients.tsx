@@ -45,7 +45,7 @@ export const Patients = () => {
 
 		<DasboardLayout>
 			
-			<div className="container patients">
+			<div className="patients">
 
 				<Card customClass="patients__table">
 
@@ -53,7 +53,7 @@ export const Patients = () => {
 					<div className="patients__table__header">
 						<h2>Mis pacientes</h2>
 						<Link 
-							to={'/patients/create'}
+							to={'/pacientes/crear'}
 							className="vb_btn vb_btn-sm vb_btn--pink">
 							<i className="bi bi-plus-lg"></i>
 						</Link>

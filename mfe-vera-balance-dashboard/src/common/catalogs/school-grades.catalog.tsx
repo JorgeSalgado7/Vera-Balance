@@ -6,4 +6,5 @@ export const schoolGrades = [
   {label: 'Preparatoria', value: 'Preparatoria'},
   {label: 'Universidad', value: 'Universidad'},
   {label: 'Maestría', value: 'Maestría'},
+	{label: 'Doctorado', value: 'Doctorado'},
 ]

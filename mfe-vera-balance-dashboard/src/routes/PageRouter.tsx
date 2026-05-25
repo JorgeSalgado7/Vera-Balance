@@ -10,8 +10,8 @@ export const PageRouter = () => {
 		<BrowserRouter>
 			<Routes>
 				<Route  path="/dashboard" element={<Dashboard />}/>
-				<Route  path="/patients" element={<Patients />}/>
-				<Route  path="/patients/create" element={<CreatePatient />}/>
+				<Route  path="/pacientes" element={<Patients />}/>
+				<Route  path="/pacientes/crear" element={<CreatePatient />}/>
 			</Routes>
 		</BrowserRouter>
 	)

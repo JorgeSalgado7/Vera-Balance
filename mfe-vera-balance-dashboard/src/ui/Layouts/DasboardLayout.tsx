@@ -14,7 +14,9 @@ export const DasboardLayout = ({ children }: DashboardI) => {
 
 			<main className="dashboard_layout__main">
 				<HeaderLayout />
-				{children}
+				
+					<section className="container">{children}</section>
+
 			</main>
 
 		</div>

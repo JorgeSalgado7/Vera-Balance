@@ -16,7 +16,7 @@ export const SidebarMenu = () => {
 					Dashboard
 				</Link>
 				
-				<Link className='sidebar_menu__nav__link' to='/patients'>
+				<Link className='sidebar_menu__nav__link' to='/pacientes'>
 					<i className="bi bi-people-fill"></i>
 					Pacientes
 				</Link>

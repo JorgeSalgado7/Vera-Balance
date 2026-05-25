@@ -1,7 +1,7 @@
 import { Select } from 'antd';
-import type { InputI } from '../../Interfaces/Inputs/input.interface';
+import type { SelectI } from '../../Interfaces/Inputs/select.interface';
 
-export const InputSelect = ({ label, placeholder }: InputI) => {
+export const InputSelect = ({ label, placeholder, options }: SelectI) => {
 	
 	const handleChange = () => {}
 	
@@ -13,9 +13,7 @@ export const InputSelect = ({ label, placeholder }: InputI) => {
 			<Select
 				defaultValue={placeholder}
 				onChange={handleChange}
-				options={[
-					{ value: 'jack', label: 'Jack' },
-				]}
+				options={options}
 				getPopupContainer={(trigger) => trigger.parentElement!}
 			/>
 			

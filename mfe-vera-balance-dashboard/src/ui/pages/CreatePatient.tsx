@@ -1,15 +1,15 @@
 //* Components
 import { DasboardLayout } from "../Layouts/DasboardLayout"
-import { InputText } from '../Components/Inputs/InputText'
 import { Card } from '../Components/Card';
-import { InputSelect } from '../Components/Inputs/InputSelect'
+import { PatientPersonalData } from "../../features/patients/components/PatientPersonalData";
+import { TerapyData } from "../../features/patients/components/TerapyData";
 
 export const CreatePatient = () => {
 	return (
 
 		<DasboardLayout>
 			
-			<div className="container patients_create">
+			<div className="patients_create">
 
 				<Card customClass="patients_create__card">
 
@@ -25,66 +25,15 @@ export const CreatePatient = () => {
 							<h3 className='patients_create__card__form__title--text'>Datos personales</h3>
 						</div>
 
-						<section  className='patients_create__card__form__grid'>
+						<PatientPersonalData />
 
-							<div className="patients_create__card__form__grid__item">
-								<InputText 
-									label='Nombre'
-									placeholder='Ej: Monica Vera'
-								/>
-							</div>
+						{/** Terapy data */}
+						<div className="patients_create__card__form__title patients_create__card__form__title__2">
+							<div className='patients_create__card__form__title--step'>2</div>
+							<h3 className='patients_create__card__form__title--text'>Sobre la terapia</h3>
+						</div>
 
-							<div className="patients_create__card__form__grid__item patients_create__card__form__grid__item--half">
-								<InputText 
-									label='Edad'
-									placeholder='Ej: 18'
-								/>
-							</div>
-
-							<div className="patients_create__card__form__grid__item patients_create__card__form__grid__item--half">
-								<InputText 
-									label='Teléfono'
-									placeholder='Ej: 55 5555 5555'
-								/>
-							</div>
-
-							<div className="patients_create__card__form__grid__item patients_create__card__form__grid__item--half">
-								<InputSelect 
-									label='Escolaridad'
-									placeholder='Elije un grado escolar'
-								/>
-							</div>
-
-							<div className="patients_create__card__form__grid__item patients_create__card__form__grid__item--half">
-								<InputText 
-									label='Ocupación'
-									placeholder='Ej: Psicólogo'
-								/>
-							</div>
-
-							<div className="patients_create__card__form__grid__item patients_create__card__form__grid__item--half">
-								<InputSelect 
-									label='Estado civil'
-									placeholder='Elije un estado civil'
-								/>
-							</div>
-
-							<div className="patients_create__card__form__grid__item patients_create__card__form__grid__item--half">
-								<InputText 
-									label='Religión'
-									placeholder='Ej: Católico'
-								/>
-							</div>
-
-							<div className="patients_create__card__form__grid__item">
-								<InputText 
-									label='Dirección'
-									placeholder='Ej: Colmena, Nicolás Romero, Edo. Mex'
-								/>
-							</div>
-
-
-						</section>
+						<TerapyData />
 
 					</form>
 

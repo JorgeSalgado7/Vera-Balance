@@ -21,6 +21,11 @@ export const SidebarMenu = () => {
 					Pacientes
 				</Link>
 
+				<Link className='sidebar_menu__nav__link' to='/pacientes'>
+					<i className="bi bi-journal-text"></i>
+					Seguimiento clínico
+				</Link>
+
 			</nav>
 
 			

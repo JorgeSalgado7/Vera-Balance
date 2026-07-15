@@ -4,6 +4,7 @@ import { Card } from '../Components/Card';
 import { PatientPersonalData } from "../../features/patients/components/PatientPersonalData";
 import { TerapyData } from "../../features/patients/components/TerapyData";
 import { TitleSection } from "../Layouts/DashboardLayouts/TitleSection";
+import { LoadingModal } from "../Components/Modals/LoadingModal";
 
 export const CreatePatient = () => {
 	return (
@@ -34,6 +35,8 @@ export const CreatePatient = () => {
 				</Card>
 				
 			</div>
+
+			<LoadingModal  isOpen={false} />
 
 		</DasboardLayout>
 

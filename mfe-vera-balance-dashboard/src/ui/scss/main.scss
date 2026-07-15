@@ -10,6 +10,7 @@
 @use './components/inputs/input';
 @use './components/inputs/select';
 @use './components/inputs/picker';
+@use './components/modals/loading_modal';
 
 //* Layouts
 @use './layouts/dashboard_layouts/dashboard_layout';

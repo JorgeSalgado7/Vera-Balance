@@ -2,14 +2,37 @@
 
 .ant-table-wrapper {
 
+	.ant-table {
+		border-radius: 12px;
+		overflow: hidden;
+	}
+
 	th {
-		background-color: $soft_pink!important;
-		color: $white!important;
-		text-align: center!important;
+		background-color: $soft_pink !important;
+		color: $white !important;
+		font-weight: 600;
+
+		&::before {
+			display: none;
+		}
 	}
 
 	td {
-		text-align: center !important;
+		vertical-align: middle;
+	}
+
+	.ant-table-tbody {
+
+		.ant-table-row {
+			transition: background-color 0.2s;
+
+			&:hover {
+
+				.ant-table-cell {
+					background-color: rgba($soft_pink, 0.08);
+				}
+			}
+		}
 	}
 
 	.ant-pagination {
@@ -17,24 +40,21 @@
 		&-item {
 			border-color: $dark_grey;
 
-			&:hover {
+			&:hover,
+			&-active {
 				border-color: $pink;
 			}
-			
+
 			a {
 				color: $pink !important;
 			}
-
 		}
-	
+
 		button {
 
 			svg {
 				fill: $pink;
 			}
-
 		}
-
 	}
-
 }

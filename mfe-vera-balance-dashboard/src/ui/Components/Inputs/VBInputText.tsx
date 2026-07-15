@@ -1,13 +1,13 @@
-import { DatePicker } from 'antd';
+import { Input } from 'antd';
 import type { InputI } from '../../Interfaces/Inputs/input.interface';
 
-export const InputDate = ({ label, placeholder }: InputI) => {
+export const VBInputText = ({ label, placeholder }: InputI) => {
 	return (
 		<div className='vb_group_input'>
 
 			{ label && <label>{label}</label> }
 
-			<DatePicker
+			<Input 
 				placeholder={placeholder}
 			/>
 			

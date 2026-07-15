@@ -1,22 +1,22 @@
 //* Styles
-import '../scss/terapy-data.scss'
+import '../scss/therapy-data.scss'
 
 //* Components
-import { InputSelect } from "../../../ui/Components/Inputs/InputSelect"
-import { InputDate } from '../../../ui/Components/Inputs/InputDate'
-import { InputArea } from '../../../ui/Components/Inputs/InputArea'
+import { VBInputSelect } from "../../../ui/Components/Inputs/VBInputSelect"
+import { VBInputDate } from '../../../ui/Components/Inputs/VBInputDate'
+import { VBInputArea } from '../../../ui/Components/Inputs/VBInputArea'
 import { therapist } from '../../../common/catalogs/therapist.catalog'
 import { therapyType } from '../../../common/catalogs/therapy-type.catalog'
 import { conditionalCatalog } from '../../../common/catalogs/conditional.catalog'
 
 
-export const TerapyData = () => {
+export const TherapyData = () => {
 	return (
 		
-		<section  className='terapy_data'>
+		<section  className='therapy_data'>
 		
 			<div className="terapy_data__item">
-				<InputSelect 
+				<VBInputSelect 
 					label='Terapeuta'
 					placeholder='Selecciona un terapeuta'
 					options={therapist}
@@ -24,14 +24,14 @@ export const TerapyData = () => {
 			</div>
 		
 			<div className="terapy_data__item">
-				<InputDate
+				<VBInputDate
 					label='Fecha de inicio'
 					placeholder='Selecciona la fecha de inicio'
 				/>
 			</div>
 		
 			<div className="terapy_data__item">
-				<InputSelect 
+				<VBInputSelect 
 					label='Tipo de terapia'
 					placeholder='Elije un tipo de terapia'
 					options={therapyType}
@@ -39,7 +39,7 @@ export const TerapyData = () => {
 			</div>
 
 			<div className="terapy_data__item terapy_data__item--empty">
-				<InputSelect 
+				<VBInputSelect 
 					label='¿Primera vez en terapia?'
 					placeholder='Si / No'
 					options={conditionalCatalog}
@@ -47,14 +47,14 @@ export const TerapyData = () => {
 			</div>
 
 			<div className="terapy_data__item">
-				<InputArea
+				<VBInputArea
 					label='Motivo de consulta'
 					placeholder='Ej: Problemas con el manejo de emociones'
 				/>
 			</div>
 
 			<div className="terapy_data__item">
-				<InputArea
+				<VBInputArea
 					label='Objetivos'
 					placeholder='Ej: Controlar mis emociones'
 				/>

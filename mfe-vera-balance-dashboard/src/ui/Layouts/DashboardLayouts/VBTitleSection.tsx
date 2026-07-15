@@ -1,6 +1,6 @@
 import type { TitleSectionI } from "../../Interfaces/Layouts/title-section.interface"
 
-export const TitleSection = ({ step, title }: TitleSectionI) => {
+export const VBTitleSection = ({ step, title }: TitleSectionI) => {
 	return (
 		<div className="title_section">
 			<div className='title_section--step'>{ step && step }</div>

@@ -2,8 +2,8 @@
 import '../scss/patient-personal-data.scss'
 
 //* Components
-import { InputText } from "../../../ui/Components/Inputs/InputText"
-import { InputSelect } from "../../../ui/Components/Inputs/InputSelect"
+import { VBInputText } from "../../../ui/Components/Inputs/VBInputText"
+import { VBInputSelect } from "../../../ui/Components/Inputs/VBInputSelect"
 import { schoolGrades } from '../../../common/catalogs/school-grades.catalog'
 import { marritage } from '../../../common/catalogs/marritage.catalog'
 
@@ -14,28 +14,28 @@ export const PatientPersonalData = () => {
 		<section  className='patient_personal_data'>
 		
 			<div className="patient_personal_data__item">
-				<InputText 
+				<VBInputText 
 					label='Nombre'
 					placeholder='Ej: Monica Vera'
 				/>
 			</div>
 		
 			<div className="patient_personal_data__item patient_personal_data__item--half">
-				<InputText 
+				<VBInputText 
 					label='Edad'
 					placeholder='Ej: 18'
 				/>
 			</div>
 		
 			<div className="patient_personal_data__item patient_personal_data__item--half">
-				<InputText 
+				<VBInputText 
 					label='Teléfono'
 					placeholder='Ej: 55 5555 5555'
 				/>
 			</div>
 		
 			<div className="patient_personal_data__item">
-				<InputSelect 
+				<VBInputSelect 
 					label='Escolaridad'
 					placeholder='Elije un grado escolar'
 					options={schoolGrades}
@@ -43,14 +43,14 @@ export const PatientPersonalData = () => {
 			</div>
 
 			<div className="patient_personal_data__item">
-				<InputText 
+				<VBInputText 
 					label='Ocupación'
 					placeholder='Ej: Psicólogo'
 				/>
 			</div>
 
 			<div className="patient_personal_data__item">
-				<InputSelect 
+				<VBInputSelect 
 					label='Estado civil'
 					placeholder='Elije un estado civil'
 					options={marritage}
@@ -58,14 +58,14 @@ export const PatientPersonalData = () => {
 			</div>
 		
 			<div className="patient_personal_data__item">
-				<InputText 
+				<VBInputText 
 					label='Religión'
 					placeholder='Ej: Católico'
 				/>
 			</div>
 		
 			<div className="patient_personal_data__item">
-				<InputText 
+				<VBInputText 
 					label='Dirección'
 					placeholder='Ej: Colmena, Nicolás Romero, Edo. Mex'
 				/>

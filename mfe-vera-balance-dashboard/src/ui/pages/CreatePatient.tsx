@@ -1,10 +1,10 @@
 //* Components
 import { DasboardLayout } from "../Layouts/DashboardLayouts/DasboardLayout"
-import { Card } from '../Components/Card';
+import { VBCard } from '../Components/VBCard';
 import { PatientPersonalData } from "../../features/patients/components/PatientPersonalData";
-import { TerapyData } from "../../features/patients/components/TerapyData";
-import { TitleSection } from "../Layouts/DashboardLayouts/TitleSection";
-import { LoadingModal } from "../Components/Modals/LoadingModal";
+import { TherapyData } from "../../features/patients/components/TherapyData";
+import { VBTitleSection} from "../Layouts/DashboardLayouts/VBTitleSection";
+import { VBLoadingModal } from "../Components/Modals/VBLoadingModal";
 
 export const CreatePatient = () => {
 	return (
@@ -13,7 +13,7 @@ export const CreatePatient = () => {
 			
 			<div className="patients_create">
 
-				<Card customClass="patients_create__card">
+				<VBCard customClass="patients_create__card">
 
 					<h2>Crea un paciente</h2>
 					<p>Completa sus datos personales e información sobre la terapia.</p>
@@ -21,10 +21,10 @@ export const CreatePatient = () => {
 					{/** Form */}
 					<form className='patients_create__card__form' onSubmit={e => { e.preventDefault() }}>
 
-						<TitleSection step={'1'} title={'Datos del paciente'}/>
+						<VBTitleSection step={'1'} title={'Datos del paciente'}/>
 						<PatientPersonalData />
-						<TitleSection step={'2'} title={'Sobre la terapia'}/>
-						<TerapyData />
+						<VBTitleSection step={'2'} title={'Sobre la terapia'}/>
+						<TherapyData />
 
 						<button className="vb_btn vb_btn--pink"type="submit">
 							Crear paciente
@@ -32,11 +32,11 @@ export const CreatePatient = () => {
 
 					</form>
 
-				</Card>
+				</VBCard>
 				
 			</div>
 
-			<LoadingModal  isOpen={false} />
+			<VBLoadingModal  isOpen={false} />
 
 		</DasboardLayout>
 

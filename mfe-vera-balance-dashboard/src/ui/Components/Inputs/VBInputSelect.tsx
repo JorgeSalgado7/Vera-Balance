@@ -1,7 +1,7 @@
 import { Select } from 'antd';
 import type { SelectI } from '../../Interfaces/Inputs/select.interface';
 
-export const InputSelect = ({
+export const VBInputSelect = ({
 	label,
 	placeholder,
 	options,

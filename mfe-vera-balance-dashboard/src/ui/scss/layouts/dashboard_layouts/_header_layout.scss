@@ -55,6 +55,7 @@
 
 	&__info {
 		display: none;
+		padding-right: 30px;
 
 		@media(min-width: 768px){
 			@include flex_mixin($align: flex-start, $justify: flex-start, $direction: column);
@@ -62,13 +63,14 @@
 
 		p {
 			margin-top: 12px;
+			font-size: 20px;
 		}
 
 	}
 
 	&__avatar {
-		width: 54px;
-		height: 54px;
+		min-width: 54px;
+		min-height: 54px;
 		border-radius: 100%;
 		background-color: colors.$warm_white;
 		border: 1px solid colors.$pink;

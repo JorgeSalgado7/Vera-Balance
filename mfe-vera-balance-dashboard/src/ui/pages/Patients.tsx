@@ -1,5 +1,5 @@
 //* Components
-import { DasboardLayout } from "../Layouts/DasboardLayout"
+import { DasboardLayout } from "../Layouts/DashboardLayouts/DasboardLayout"
 import { InputText } from '../Components/Inputs/InputText'
 import { Card } from '../Components/Card';
 
@@ -55,6 +55,7 @@ export const Patients = () => {
 						<Link 
 							to={'/pacientes/crear'}
 							className="vb_btn vb_btn-sm vb_btn--pink">
+								Crear paciente
 							<i className="bi bi-plus-lg"></i>
 						</Link>
 					</div>

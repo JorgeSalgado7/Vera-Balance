@@ -1,4 +1,4 @@
-import { DasboardLayout } from "./Layouts/DasboardLayout"
+import { DasboardLayout } from "./Layouts/DashboardLayouts/DasboardLayout"
 
 export const Dashboard = () => {
 	return (

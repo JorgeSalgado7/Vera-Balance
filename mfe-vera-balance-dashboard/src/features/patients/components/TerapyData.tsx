@@ -7,6 +7,7 @@ import { InputDate } from '../../../ui/Components/Inputs/InputDate'
 import { InputArea } from '../../../ui/Components/Inputs/InputArea'
 import { therapist } from '../../../common/catalogs/therapist.catalog'
 import { therapyType } from '../../../common/catalogs/therapy-type.catalog'
+import { conditionalCatalog } from '../../../common/catalogs/conditional.catalog'
 
 
 export const TerapyData = () => {
@@ -37,7 +38,13 @@ export const TerapyData = () => {
 				/>
 			</div>
 
-			<div className="terapy_data__item terapy_data__item--empty"></div>
+			<div className="terapy_data__item terapy_data__item--empty">
+				<InputSelect 
+					label='¿Primera vez en terapia?'
+					placeholder='Si / No'
+					options={conditionalCatalog}
+				/>
+			</div>
 
 			<div className="terapy_data__item">
 				<InputArea

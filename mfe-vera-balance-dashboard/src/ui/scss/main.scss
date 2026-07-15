@@ -15,6 +15,7 @@
 @use './layouts/dashboard_layouts/dashboard_layout';
 @use './layouts/dashboard_layouts/header_layout';
 @use './layouts/dashboard_layouts/sidebar_menu';
+@use './layouts/dashboard_layouts/title_section';
 
 //* Pages
 @use './pages/patients';

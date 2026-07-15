@@ -1,8 +1,9 @@
 //* Components
-import { DasboardLayout } from "../Layouts/DasboardLayout"
+import { DasboardLayout } from "../Layouts/DashboardLayouts/DasboardLayout"
 import { Card } from '../Components/Card';
 import { PatientPersonalData } from "../../features/patients/components/PatientPersonalData";
 import { TerapyData } from "../../features/patients/components/TerapyData";
+import { TitleSection } from "../Layouts/DashboardLayouts/TitleSection";
 
 export const CreatePatient = () => {
 	return (
@@ -17,23 +18,16 @@ export const CreatePatient = () => {
 					<p>Completa sus datos personales e información sobre la terapia.</p>
 
 					{/** Form */}
-					<form className='patients_create__card__form'>
+					<form className='patients_create__card__form' onSubmit={e => { e.preventDefault() }}>
 
-						{/** Patient data */}
-						<div className="patients_create__card__form__title">
-							<div className='patients_create__card__form__title--step'>1</div>
-							<h3 className='patients_create__card__form__title--text'>Datos personales</h3>
-						</div>
-
+						<TitleSection step={'1'} title={'Datos del paciente'}/>
 						<PatientPersonalData />
-
-						{/** Terapy data */}
-						<div className="patients_create__card__form__title patients_create__card__form__title__2">
-							<div className='patients_create__card__form__title--step'>2</div>
-							<h3 className='patients_create__card__form__title--text'>Sobre la terapia</h3>
-						</div>
-
+						<TitleSection step={'2'} title={'Sobre la terapia'}/>
 						<TerapyData />
+
+						<button className="vb_btn vb_btn--pink"type="submit">
+							Crear paciente
+						</button>
 
 					</form>
 

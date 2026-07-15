@@ -13,29 +13,6 @@
 		&__form {
 			width: 100%;
 			margin-top: 30px;
-
-			&__title {
-				width: 100%;
-				@include flex-mixin($align: center);
-
-				&--step {
-					width: 30px;
-					height: 30px;
-					border-radius: 100%;
-					background-color: colors.$soft_pink;
-					color: colors.$white;
-					@include flex-mixin($align: center, $justify: center);
-					margin-right: 12px;
-					font-size: 18px;
-					font-weight: 700;
-				}
-
-				&__2 {
-					margin-top: 30px;
-				}
-			
-			}
-
 		}
 
 	}

@@ -122,7 +122,7 @@ export const Patients = () => {
 				key: 'edit',
 				icon: <EditOutlined />,
 				label: 'Editar paciente',
-				onClick: () => navigate(ROUTES.PATIENTS.EDIT(patient.id)),
+				onClick: () => navigate(`${ROUTES.PATIENTS.EDIT(patient.id)}`),
 			},
 			{
 				type: 'divider',

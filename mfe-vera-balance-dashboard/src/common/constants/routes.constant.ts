@@ -4,10 +4,8 @@ export const ROUTES = {
 	PATIENTS: {
 		LIST: '/pacientes',
 		CREATE: '/pacientes/crear',
-		DETAIL: (patientId: string) =>
-			`/pacientes/${patientId}`,
-		EDIT: (patientId: string) =>
-			`/pacientes/${patientId}/editar`,
+		DETAIL: (patientId: string) => `/pacientes/${patientId}`,
+		EDIT: (patientId: string) =>`/pacientes/${patientId}/editar`,
 	},
 
 	CLINICAL_FOLLOW_UP: '/seguimiento-clinico',

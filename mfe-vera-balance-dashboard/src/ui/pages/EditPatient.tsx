@@ -6,27 +6,29 @@ import { TherapyData } from "../../features/patients/components/TherapyData";
 import { VBTitleSection} from "../Layouts/DashboardLayouts/VBTitleSection";
 import { VBLoadingModal } from "../Components/Modals/VBLoadingModal";
 
-export const CreatePatient = () => {
+export const EditPatient = () => {
 	return (
 
 		<DasboardLayout>
 			
-			<div className="patients_create">
+			<div className="patients_edit">
 
-				<VBCard customClass="patients_create__card">
+				<VBCard customClass="patients_edit__card">
 
-					<h2>Crea un paciente</h2>
-					<p>Completa sus datos personales e información sobre la terapia.</p>
+					<h2>Edita un paciente</h2>
+					<p>Actualiza sus datos personales e información sobre la terapia.</p>
 
 					{/** Form */}
-					<form className='patients_create__card__form' onSubmit={e => { e.preventDefault() }}>
+					<form className='patients_edit__card__form' onSubmit={e => { e.preventDefault() }}>
 
 						<VBTitleSection step={'1'} title={'Datos del paciente'}/>
 						<PatientPersonalData />
 						<VBTitleSection step={'2'} title={'Sobre la terapia'}/>
 						<TherapyData />
 
-						<button className="vb_btn vb_btn--pink"type="submit">Crear paciente</button>
+						<button className="vb_btn vb_btn--pink"type="submit">
+							Guardar cambios
+						</button>
 
 					</form>
 

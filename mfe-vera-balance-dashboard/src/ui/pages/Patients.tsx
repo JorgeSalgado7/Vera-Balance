@@ -20,20 +20,14 @@ import {
 	SearchOutlined,
 } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router';
-
 import { DasboardLayout } from '../Layouts/DashboardLayouts/DasboardLayout';
 import { VBCard } from '../Components/VBCard';
-
 import { PatientStatusTag } from '../../features/patients/components/PatientStatusTag';
 import { PatientTherapyTypes } from '../../features/patients/components/PatientTherapyTypes';
-
+import { usePatients } from '../../features/patients/application/hooks/usePatients';
 import type { PatientListItem } from '../../features/patients/domain/interfaces/patient.interface';
-
 import { PATIENT_STATUS, type PatientStatus } from '../../common/catalogs/patient-status.catalog';
-
 import type { TherapyType } from '../../common/catalogs/therapy-type.catalog';
-
-import { patientsMock } from '../../features/patients/infrastructure/mocks/patients.mock';
 import { ROUTES } from '../../common/constants/routes.constant';
 
 const normalizeText = (value: string): string => {
@@ -54,9 +48,7 @@ const getPatientInitials = (name: string): string => {
 		.toUpperCase();
 };
 
-const formatLastSession = (
-	date: string | null,
-): string => {
+const formatLastSession = (date: string | null): string => {
 	if (!date) {
 		return 'Sin sesiones';
 	}
@@ -71,9 +63,9 @@ const formatLastSession = (
 export const Patients = () => {
 	const navigate = useNavigate();
 
+	const { patients, isLoading, handleChangePatientStatus } = usePatients();
+
 	const [search, setSearch] = useState('');
-	const [patients, setPatients] = useState<PatientListItem[]>(patientsMock);
-	const [isLoading] = useState(false);
 
 	const filteredPatients = useMemo(() => {
 		const normalizedSearch = normalizeText(search);
@@ -85,10 +77,7 @@ export const Patients = () => {
 		return patients.filter((patient) => normalizeText(patient.name).includes(normalizedSearch));
 	}, [patients, search]);
 
-	const handleStatusChange = (
-		patient: PatientListItem,
-		nextStatus: PatientStatus,
-	) => {
+	const handleStatusChange = (patient: PatientListItem, nextStatus: PatientStatus) => {
 		const isActivation = nextStatus === PATIENT_STATUS.ACTIVE;
 
 		Modal.confirm({
@@ -97,22 +86,8 @@ export const Patients = () => {
 			okText: isActivation ? 'Reactivar' : 'Desactivar',
 			cancelText: 'Cancelar',
 			centered: true,
-			okButtonProps: {
-				danger: !isActivation,
-			},
-			onOk: () => {
-				setPatients((currentPatients) =>
-					currentPatients.map(
-						(currentPatient) =>
-							currentPatient.id ===
-							patient.id
-								? {
-										...currentPatient,
-										status: nextStatus,
-									}
-								: currentPatient,
-					),
-				);
+			okButtonProps: { danger: !isActivation },
+			onOk: () => { handleChangePatientStatus(patient.id, nextStatus);
 			},
 		});
 	};
@@ -126,7 +101,7 @@ export const Patients = () => {
 						key: 'activate',
 						icon: <PlayCircleOutlined />,
 						label: 'Reactivar paciente',
-						onClick: () => handleStatusChange( patient, PATIENT_STATUS.ACTIVE),
+						onClick: () => handleStatusChange(patient, PATIENT_STATUS.ACTIVE),
 					}
 				: {
 						key: 'deactivate',
@@ -134,7 +109,7 @@ export const Patients = () => {
 						label: 'Desactivar paciente',
 						danger: true,
 						onClick: () => handleStatusChange(patient, PATIENT_STATUS.INACTIVE),
-			};
+					};
 
 		return [
 			{
@@ -185,7 +160,9 @@ export const Patients = () => {
 			key: 'therapyTypes',
 			width: 320,
 			responsive: ['md'],
-			render: ( therapyTypes: TherapyType[] ) => (<PatientTherapyTypes therapyTypes={therapyTypes} />),
+			render: (therapyTypes: TherapyType[]) => (
+				<PatientTherapyTypes therapyTypes={therapyTypes} />
+			),
 		},
 		{
 			title: 'Última sesión',
@@ -193,9 +170,7 @@ export const Patients = () => {
 			key: 'lastSessionAt',
 			width: 180,
 			responsive: ['sm'],
-			render: (
-				lastSessionAt: string | null,
-			) => (
+			render: (lastSessionAt: string | null) => (
 				<span className={ lastSessionAt ? 'patient_last_session' : 'patient_last_session patient_last_session--empty' }>
 					{formatLastSession(lastSessionAt)}
 				</span>
@@ -206,7 +181,9 @@ export const Patients = () => {
 			dataIndex: 'status',
 			key: 'status',
 			width: 140,
-			render: (status: PatientStatus) => (<PatientStatusTag status={status} />),
+			render: (status: PatientStatus) => (
+				<PatientStatusTag status={status} />
+			),
 		},
 		{
 			title: 'Acciones',
@@ -215,7 +192,7 @@ export const Patients = () => {
 			width: 100,
 			fixed: 'right',
 			render: (_, patient) => (
-				<Dropdown 
+				<Dropdown
 					menu={{ items: getPatientActions(patient) }}
 					trigger={['click']}
 					placement="bottomRight"
@@ -238,7 +215,7 @@ export const Patients = () => {
 					<div className="patients__table__header">
 						<div>
 							<h2>Mis pacientes</h2>
-							<p> Consulta y administra los expedientes de tus pacientes.</p>
+							<p>Consulta y administra los expedientes de tus pacientes.</p>
 						</div>
 
 						<Link to={ROUTES.PATIENTS.CREATE} className="vb_btn vb_btn-sm vb_btn--pink">
@@ -282,7 +259,7 @@ export const Patients = () => {
 									description={ search ? 'No encontramos pacientes con ese nombre.' : 'Aún no tienes pacientes registrados.' }
 								>
 									{!search && (
-										<Link to={ROUTES.PATIENTS.CREATE} className="vb_btn vb_btn-sm vb_btn--pink" >
+										<Link to={ROUTES.PATIENTS.CREATE} className="vb_btn vb_btn-sm vb_btn--pink">
 											Crear primer paciente
 										</Link>
 									)}

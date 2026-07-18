@@ -11,10 +11,7 @@ import { useCreatePatient } from '../application/hooks/useCreatePatient'
 
 export const PatientPersonalData = () => {
 
-	const {
-		personalData,
-		handleUpdatePersonalData,
-	} = useCreatePatient()
+	const { personalData,handleUpdatePersonalData } = useCreatePatient()
 
 	return (
 		

@@ -12,8 +12,12 @@ export const createPatientInitialState: CreatePatientState = {
 		address: '',
 	},
 	therapyData: {
+		therapist: '',
+		startDate: '',
 		therapyType: '',
+		firstTimeInTherapy: '',
 		reasonForConsultation: '',
+		objectives: '',
 	},
 	responsibleData: {
 		name: '',

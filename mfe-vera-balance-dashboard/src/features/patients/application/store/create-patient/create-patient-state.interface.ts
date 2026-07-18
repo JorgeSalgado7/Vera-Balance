@@ -10,8 +10,12 @@ export interface CreatePatientPersonalData {
 }
 
 export interface CreatePatientTherapyData {
+	therapist: string;
+	startDate: string;
 	therapyType: string;
+	firstTimeInTherapy: string;
 	reasonForConsultation: string;
+	objectives: string;
 }
 
 export interface CreatePatientResponsibleData {

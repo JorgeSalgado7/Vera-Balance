@@ -8,7 +8,7 @@ import {
 	Modal,
 	Table,
 	type MenuProps,
-	type TableColumnsType,
+	type TableColumnsType
 } from 'antd';
 import {
 	EllipsisOutlined,
@@ -17,18 +17,18 @@ import {
 	PauseCircleOutlined,
 	PlayCircleOutlined,
 	PlusOutlined,
-	SearchOutlined,
+	SearchOutlined
 } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router';
-import { DasboardLayout } from '../Layouts/DashboardLayouts/DasboardLayout';
-import { VBCard } from '../Components/VBCard';
-import { PatientStatusTag } from '../../features/patients/components/PatientStatusTag';
-import { PatientTherapyTypes } from '../../features/patients/components/PatientTherapyTypes';
-import { usePatients } from '../../features/patients/application/hooks/usePatients';
-import type { PatientListItem } from '../../features/patients/domain/interfaces/patient.interface';
-import { PATIENT_STATUS, type PatientStatus } from '../../common/catalogs/patient-status.catalog';
-import type { TherapyType } from '../../common/catalogs/therapy-type.catalog';
-import { ROUTES } from '../../common/constants/routes.constant';
+import { DasboardLayout } from '../../../../ui/Layouts/DashboardLayouts/DasboardLayout';
+import { VBCard } from '../../../../ui/Components/VBCard';
+import { PatientStatusTag } from '../components/PatientStatusTag';
+import { PatientTherapyTypes } from '../components/PatientTherapyTypes';
+import { usePatients } from '../../hooks/usePatients';
+import type { PatientListItem } from '../../domain/interfaces/patient.interface';
+import { PATIENT_STATUS, type PatientStatus } from '../../../../common/catalogs/patient-status.catalog';
+import type { TherapyType } from '../../../../common/catalogs/therapy-type.catalog';
+import { ROUTES } from '../../../../common/constants/routes.constant';
 
 const normalizeText = (value: string): string => {
 	return value
@@ -56,7 +56,7 @@ const formatLastSession = (date: string | null): string => {
 	return new Intl.DateTimeFormat('es-MX', {
 		day: '2-digit',
 		month: 'short',
-		year: 'numeric',
+		year: 'numeric'
 	}).format(new Date(`${date}T12:00:00`));
 };
 
@@ -88,7 +88,7 @@ export const Patients = () => {
 			centered: true,
 			okButtonProps: { danger: !isActivation },
 			onOk: () => { handleChangePatientStatus(patient.id, nextStatus);
-			},
+			}
 		});
 	};
 
@@ -101,14 +101,14 @@ export const Patients = () => {
 						key: 'activate',
 						icon: <PlayCircleOutlined />,
 						label: 'Reactivar paciente',
-						onClick: () => handleStatusChange(patient, PATIENT_STATUS.ACTIVE),
+						onClick: () => handleStatusChange(patient, PATIENT_STATUS.ACTIVE)
 					}
 				: {
 						key: 'deactivate',
 						icon: <PauseCircleOutlined />,
 						label: 'Desactivar paciente',
 						danger: true,
-						onClick: () => handleStatusChange(patient, PATIENT_STATUS.INACTIVE),
+						onClick: () => handleStatusChange(patient, PATIENT_STATUS.INACTIVE)
 					};
 
 		return [
@@ -116,18 +116,18 @@ export const Patients = () => {
 				key: 'record',
 				icon: <EyeOutlined />,
 				label: 'Ver expediente',
-				onClick: () => navigate(ROUTES.PATIENTS.DETAIL(patient.id)),
+				onClick: () => navigate(ROUTES.PATIENTS.DETAIL(patient.id))
 			},
 			{
 				key: 'edit',
 				icon: <EditOutlined />,
 				label: 'Editar paciente',
-				onClick: () => navigate(`${ROUTES.PATIENTS.EDIT(patient.id)}`),
+				onClick: () => navigate(`${ROUTES.PATIENTS.EDIT(patient.id)}`)
 			},
 			{
-				type: 'divider',
+				type: 'divider'
 			},
-			statusAction,
+			statusAction
 		];
 	};
 
@@ -152,7 +152,7 @@ export const Patients = () => {
 						{patient.name}
 					</span>
 				</button>
-			),
+			)
 		},
 		{
 			title: 'Tipo de terapia',
@@ -162,7 +162,7 @@ export const Patients = () => {
 			responsive: ['md'],
 			render: (therapyTypes: TherapyType[]) => (
 				<PatientTherapyTypes therapyTypes={therapyTypes} />
-			),
+			)
 		},
 		{
 			title: 'Última sesión',
@@ -174,7 +174,7 @@ export const Patients = () => {
 				<span className={ lastSessionAt ? 'patient_last_session' : 'patient_last_session patient_last_session--empty' }>
 					{formatLastSession(lastSessionAt)}
 				</span>
-			),
+			)
 		},
 		{
 			title: 'Estado',
@@ -183,7 +183,7 @@ export const Patients = () => {
 			width: 140,
 			render: (status: PatientStatus) => (
 				<PatientStatusTag status={status} />
-			),
+			)
 		},
 		{
 			title: 'Acciones',
@@ -204,8 +204,8 @@ export const Patients = () => {
 						aria-label={`Acciones de ${patient.name}`}
 					/>
 				</Dropdown>
-			),
-		},
+			)
+		}
 	];
 
 	return (
@@ -250,7 +250,7 @@ export const Patients = () => {
 							pageSize: 10,
 							showSizeChanger: false,
 							position: ['bottomCenter'],
-							hideOnSinglePage: true,
+							hideOnSinglePage: true
 						}}
 						locale={{
 							emptyText: (
@@ -264,7 +264,7 @@ export const Patients = () => {
 										</Link>
 									)}
 								</Empty>
-							),
+							)
 						}}
 					/>
 				</VBCard>

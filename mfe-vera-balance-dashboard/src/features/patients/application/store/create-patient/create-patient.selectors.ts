@@ -8,12 +8,15 @@ const normalizeValue = (value: string): string => {
 		.trim();
 };
 
-export const selectCreatePatient = (state: RootState) => state.createPatient;
 export const selectCreatePatientPersonalData = (state: RootState) => state.createPatient.personalData;
 export const selectCreatePatientTherapyData = (state: RootState) => state.createPatient.therapyData;
-export const selectCreatePatientResponsibleData = (state: RootState) => state.createPatient.responsibleData;
+export const selectCreatePatientGuardianData = (state: RootState) => state.createPatient.guardianData;
 export const selectCreatePatientPartnerData = (state: RootState) => state.createPatient.partnerData;
 export const selectCreatePatientSecondPatientData = (state: RootState) => state.createPatient.secondPatientData;
+
+export const selectHasSelectedTherapyType = (state: RootState): boolean => {
+	return Boolean(state.createPatient.therapyData.therapyType);
+};
 
 export const selectIsMinor = (state: RootState): boolean => {
 	const age = Number(state.createPatient.personalData.age);
@@ -21,15 +24,15 @@ export const selectIsMinor = (state: RootState): boolean => {
 };
 
 export const selectHasPartner = (state: RootState): boolean => {
-	const maritalStatus = normalizeValue(
-		state.createPatient.personalData.maritalStatus,
-	);
+	const maritalStatus = normalizeValue(state.createPatient.personalData.maritalStatus);
 
 	return [
 		'casado',
 		'casada',
+		'married',
 		'en una relacion',
 		'en pareja',
+		'relationship'
 	].includes(maritalStatus);
 };
 
@@ -38,18 +41,20 @@ export const selectIsCouplesTherapy = (state: RootState): boolean => {
 
 	return [
 		'pareja',
-		'terapia de pareja',
+		'couple',
+		'couples',
+		'terapia de pareja'
 	].includes(therapyType);
 };
 
-export const selectShouldShowResponsibleData = (state: RootState): boolean => {
-	return selectIsMinor(state);
+export const selectShouldShowGuardianData = (state: RootState): boolean => {
+	return selectHasSelectedTherapyType(state) && selectIsMinor(state);
 };
 
 export const selectShouldShowPartnerData = (state: RootState): boolean => {
-	return selectHasPartner(state) && !selectIsCouplesTherapy(state);
+	return selectHasSelectedTherapyType(state) && selectHasPartner(state) && !selectIsCouplesTherapy(state);
 };
 
 export const selectShouldShowSecondPatientData = (state: RootState): boolean => {
-	return selectIsCouplesTherapy(state);
+	return selectHasSelectedTherapyType(state) && selectIsCouplesTherapy(state);
 };

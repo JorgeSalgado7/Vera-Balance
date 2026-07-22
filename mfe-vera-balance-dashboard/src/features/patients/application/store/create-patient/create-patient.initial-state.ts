@@ -9,7 +9,7 @@ export const createPatientInitialState: CreatePatientState = {
 		occupation: '',
 		maritalStatus: '',
 		religion: '',
-		address: '',
+		address: ''
 	},
 	therapyData: {
 		therapist: '',
@@ -17,19 +17,18 @@ export const createPatientInitialState: CreatePatientState = {
 		therapyType: '',
 		firstTimeInTherapy: '',
 		reasonForConsultation: '',
-		objectives: '',
+		objectives: ''
 	},
-	responsibleData: {
+	guardianData: {
 		name: '',
 		age: '',
 		relationship: '',
-		phone: '',
+		phone: ''
 	},
 	partnerData: {
 		name: '',
 		age: '',
-		phone: '',
-		relationshipTime: '',
+		relationshipTime: ''
 	},
 	secondPatientData: {
 		name: '',
@@ -39,6 +38,6 @@ export const createPatientInitialState: CreatePatientState = {
 		occupation: '',
 		maritalStatus: '',
 		religion: '',
-		address: '',
-	},
+		address: ''
+	}
 };

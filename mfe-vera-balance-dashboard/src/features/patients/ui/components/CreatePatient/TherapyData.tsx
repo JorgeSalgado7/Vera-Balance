@@ -1,15 +1,11 @@
-//* Styles
-import '../scss/therapy-data.scss'
-
 //* Components
 import dayjs from 'dayjs'
-import { VBInputSelect } from "../../../ui/Components/Inputs/VBInputSelect"
-import { VBInputDate } from '../../../ui/Components/Inputs/VBInputDate'
-import { VBInputArea } from '../../../ui/Components/Inputs/VBInputArea'
-import { therapist } from '../../../common/catalogs/therapist.catalog'
-import { therapyType } from '../../../common/catalogs/therapy-type.catalog'
-import { conditionalCatalog } from '../../../common/catalogs/conditional.catalog'
-import { useCreatePatient } from '../application/hooks/useCreatePatient'
+import { VBInputSelect } from '../../../../../ui/Components/Inputs/VBInputSelect'
+import { VBInputDate } from '../../../../../ui/Components/Inputs/VBInputDate'
+import { VBInputArea } from '../../../../../ui/Components/Inputs/VBInputArea'
+import { therapist } from '../../../../../common/catalogs/therapist.catalog'
+import { conditionalCatalog } from '../../../../../common/catalogs/conditional.catalog'
+import { useCreatePatient } from '../../../hooks/useCreatePatient'
 
 
 export const TherapyData = () => {
@@ -18,9 +14,9 @@ export const TherapyData = () => {
 
 	return (
 		
-		<section  className='therapy_data'>
+		<section className='therapy_data'>
 		
-			<div className="terapy_data__item">
+			<div className="therapy_data__item">
 				<VBInputSelect 
 					label='Terapeuta'
 					value={therapyData.therapist}
@@ -30,7 +26,7 @@ export const TherapyData = () => {
 				/>
 			</div>
 		
-			<div className="terapy_data__item">
+			<div className="therapy_data__item">
 				<VBInputDate
 					label='Fecha de inicio'
 					value={therapyData.startDate ? dayjs(therapyData.startDate) : null}
@@ -38,18 +34,8 @@ export const TherapyData = () => {
 					onChange={(value) => handleUpdateTherapyData({ startDate: value ? value.format('YYYY-MM-DD') : '' })}
 				/>
 			</div>
-		
-			<div className="terapy_data__item">
-				<VBInputSelect 
-					label='Tipo de terapia'
-					value={therapyData.therapyType}
-					placeholder='Elije un tipo de terapia'
-					options={therapyType}
-					onChange={(value) => handleUpdateTherapyData({ therapyType: value })}
-				/>
-			</div>
 
-			<div className="terapy_data__item terapy_data__item--empty">
+			<div className="therapy_data__item">
 				<VBInputSelect 
 					label='¿Primera vez en terapia?'
 					value={therapyData.firstTimeInTherapy}
@@ -59,7 +45,9 @@ export const TherapyData = () => {
 				/>
 			</div>
 
-			<div className="terapy_data__item">
+			<div className="therapy_data__item therapy_data__empty"></div>
+
+			<div className="therapy_data__item">
 				<VBInputArea
 					label='Motivo de consulta'
 					value={therapyData.reasonForConsultation}
@@ -68,7 +56,7 @@ export const TherapyData = () => {
 				/>
 			</div>
 
-			<div className="terapy_data__item">
+			<div className="therapy_data__item">
 				<VBInputArea
 					label='Objetivos'
 					value={therapyData.objectives}
@@ -76,7 +64,6 @@ export const TherapyData = () => {
 					onChange={(value) => handleUpdateTherapyData({ objectives: value })}
 				/>
 			</div>
-	
 		
 		</section>
 

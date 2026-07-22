@@ -21,9 +21,7 @@ const patientsSlice = createSlice({
 			state.patients.push(action.payload);
 		},
 		updatePatient: (state,action: PayloadAction<PatientListItem>) => {
-			const patientIndex = state.patients.findIndex(
-				(patient) => patient.id === action.payload.id,
-			);
+			const patientIndex = state.patients.findIndex((patient) => patient.id === action.payload.id);
 
 			if (patientIndex === -1) {
 				return;
@@ -31,9 +29,7 @@ const patientsSlice = createSlice({
 
 			state.patients[patientIndex] = action.payload;
 
-			if (
-				state.selectedPatient?.id === action.payload.id
-			) {
+			if (state.selectedPatient?.id === action.payload.id) {
 				state.selectedPatient = action.payload;
 			}
 		},

@@ -1,5 +1,5 @@
-@use '../mixins/flex_mixin' as *;
-@use '../config/colors';
+@use '../../../../../ui/scss/mixins/flex_mixin' as *;
+@use '../../../../../ui/scss/config/colors';
 
 .patients_create {
 	width: 100%;

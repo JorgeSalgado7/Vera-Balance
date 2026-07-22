@@ -1,0 +1,11 @@
+//* Pages
+@use './pages/patients';
+@use './pages/patients_create';
+
+//* Components
+@use './components/therapy-type-data';
+@use './components/patient-personal-data';
+@use './components/patient-guardian-data';
+@use './components/patient-partner-data';
+@use './components/therapy-data';
+@use './components/second-patient-data';

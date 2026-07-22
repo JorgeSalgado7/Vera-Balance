@@ -1,21 +1,18 @@
-//* Styles
-import '../scss/patient-personal-data.scss'
-
 //* Components
-import { VBInputText } from "../../../ui/Components/Inputs/VBInputText"
-import { VBInputSelect } from "../../../ui/Components/Inputs/VBInputSelect"
-import { schoolGrades } from '../../../common/catalogs/school-grades.catalog'
-import { marritage } from '../../../common/catalogs/marritage.catalog'
-import { useCreatePatient } from '../application/hooks/useCreatePatient'
+import { VBInputText } from '../../../../../ui/Components/Inputs/VBInputText'
+import { VBInputSelect } from '../../../../../ui/Components/Inputs/VBInputSelect'
+import { schoolGrades } from '../../../../../common/catalogs/school-grades.catalog'
+import { marritage } from '../../../../../common/catalogs/marritage.catalog'
+import { useCreatePatient } from '../../../hooks/useCreatePatient'
 
 
 export const PatientPersonalData = () => {
 
-	const { personalData,handleUpdatePersonalData } = useCreatePatient()
+	const { personalData, handleUpdatePersonalData } = useCreatePatient()
 
 	return (
 		
-		<section  className='patient_personal_data'>
+		<section className='patient_personal_data'>
 		
 			<div className="patient_personal_data__item">
 				<VBInputText 
@@ -68,7 +65,7 @@ export const PatientPersonalData = () => {
 					label='Estado civil'
 					value={personalData.maritalStatus}
 					placeholder='Elije un estado civil'
-					options={marritage || undefined}
+					options={marritage}
 					onChange={(value) => handleUpdatePersonalData({ maritalStatus: value })}
 				/>
 			</div>

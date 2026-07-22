@@ -18,7 +18,7 @@ export interface CreatePatientTherapyData {
 	objectives: string;
 }
 
-export interface CreatePatientResponsibleData {
+export interface CreatePatientGuardianData {
 	name: string;
 	age: string;
 	relationship: string;
@@ -28,7 +28,6 @@ export interface CreatePatientResponsibleData {
 export interface CreatePatientPartnerData {
 	name: string;
 	age: string;
-	phone: string;
 	relationshipTime: string;
 }
 
@@ -46,7 +45,7 @@ export interface CreatePatientSecondPatientData {
 export interface CreatePatientState {
 	personalData: CreatePatientPersonalData;
 	therapyData: CreatePatientTherapyData;
-	responsibleData: CreatePatientResponsibleData;
+	guardianData: CreatePatientGuardianData;
 	partnerData: CreatePatientPartnerData;
 	secondPatientData: CreatePatientSecondPatientData;
 }

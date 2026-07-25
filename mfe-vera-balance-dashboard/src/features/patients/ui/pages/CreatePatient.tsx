@@ -1,31 +1,59 @@
+import { useEffect } from 'react';
+
 //* Components
 import { DasboardLayout } from "../../../../ui/Layouts/DashboardLayouts/DasboardLayout"
 import { VBCard } from '../../../../ui/Components/VBCard';
-import { TherapyTypeData } from "../components/TherapyTypeData";
-import { PatientPersonalData } from "../components/CreatePatient/PatientPersonalData";
-import { PatientGuardianData } from "../components/CreatePatient/PatientGuardianData";
-import { PatientPartnerData } from "../components/CreatePatient/PatientPartnerData";
-import { SecondPatientData } from "../components/CreatePatient/SecondPatientData";
-import { TherapyData } from "../components/CreatePatient/TherapyData";
+import { TherapyTypeData } from "../components/PatientForm/TherapyTypeData";
+import { PatientPersonalData } from "../components/PatientForm/PatientPersonalData";
+import { PatientGuardianData } from "../components/PatientForm/PatientGuardianData";
+import { PatientPartnerData } from "../components/PatientForm/PatientPartnerData";
+import { SecondPatientData } from "../components/PatientForm/SecondPatientData";
+import { TherapyData } from "../components/PatientForm/TherapyData";
 import { VBTitleSection} from "../../../../ui/Layouts/DashboardLayouts/VBTitleSection";
 import { VBLoadingModal } from "../../../../ui/Components/Modals/VBLoadingModal";
 
 //* Hooks
+import { usePatientForm } from "../../hooks/usePatientForm";
 import { useCreatePatient } from "../../hooks/useCreatePatient";
 
 export const CreatePatient = () => {
 
 	const {
+		patientForm,
+		personalData,
+		therapyData,
+		guardianData,
+		partnerData,
+		secondPatientData,
 		hasSelectedTherapyType,
 		shouldShowGuardianData,
 		shouldShowPartnerData,
-		shouldShowSecondPatientData
+		shouldShowSecondPatientData,
+		handleUpdatePersonalData,
+		handleUpdateTherapyData,
+		handleUpdateGuardianData,
+		handleUpdatePartnerData,
+		handleUpdateSecondPatientData,
+		handleResetPatientForm
+	} = usePatientForm()
+
+	const {
+		isLoading,
+		handleCreatePatient
 	} = useCreatePatient()
+
+	useEffect(() => {
+		handleResetPatientForm()
+	}, [handleResetPatientForm])
 
 	const guardianStep = 3
 	const partnerStep = shouldShowGuardianData ? 4 : 3
 	const secondPatientStep = shouldShowGuardianData ? 4 : 3
 	const therapyStep = 3 + Number(shouldShowGuardianData) + Number(shouldShowPartnerData || shouldShowSecondPatientData)
+
+	const handleSubmit = async () => {
+		await handleCreatePatient(patientForm)
+	}
 
 	return (
 
@@ -39,39 +67,39 @@ export const CreatePatient = () => {
 					<p>Completa sus datos personales e información sobre la terapia.</p>
 
 					{/** Form */}
-					<form className='patients_create__card__form' onSubmit={e => { e.preventDefault() }}>
+					<form className='patients_create__card__form' onSubmit={e => { e.preventDefault(); handleSubmit() }}>
 
 						<VBTitleSection step={'1'} title={'Tipo de terapia'}/>
-						<TherapyTypeData />
+						<TherapyTypeData therapyData={therapyData} onChange={handleUpdateTherapyData}/>
 
 						{ hasSelectedTherapyType &&
 							<>
 								<VBTitleSection step={'2'} title={'Datos del paciente'}/>
-								<PatientPersonalData />
+								<PatientPersonalData personalData={personalData} onChange={handleUpdatePersonalData}/>
 
 								{ shouldShowGuardianData &&
 									<>
 										<VBTitleSection step={`${guardianStep}`} title={'Tutor o responsable'}/>
-										<PatientGuardianData />
+										<PatientGuardianData guardianData={guardianData} onChange={handleUpdateGuardianData}/>
 									</>
 								}
 
 								{ shouldShowPartnerData &&
 									<>
 										<VBTitleSection step={`${partnerStep}`} title={'Datos de la pareja'}/>
-										<PatientPartnerData />
+										<PatientPartnerData partnerData={partnerData} onChange={handleUpdatePartnerData}/>
 									</>
 								}
 
 								{ shouldShowSecondPatientData &&
 									<>
 										<VBTitleSection step={`${secondPatientStep}`} title={'Segundo paciente'}/>
-										<SecondPatientData />
+										<SecondPatientData secondPatientData={secondPatientData} onChange={handleUpdateSecondPatientData}/>
 									</>
 								}
 
 								<VBTitleSection step={`${therapyStep}`} title={'Sobre la terapia'}/>
-								<TherapyData />
+								<TherapyData therapyData={therapyData} onChange={handleUpdateTherapyData}/>
 
 								<button className="vb_btn vb_btn--pink"type="submit">Crear paciente</button>
 							</>
@@ -83,7 +111,7 @@ export const CreatePatient = () => {
 				
 			</div>
 
-			<VBLoadingModal  isOpen={false} />
+			<VBLoadingModal isOpen={isLoading} />
 
 		</DasboardLayout>
 

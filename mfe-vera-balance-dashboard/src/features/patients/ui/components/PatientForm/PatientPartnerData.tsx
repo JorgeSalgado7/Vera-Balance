@@ -1,11 +1,16 @@
 //* Components
 import { VBInputText } from '../../../../../ui/Components/Inputs/VBInputText'
-import { useCreatePatient } from '../../../hooks/useCreatePatient'
+
+//* Interfaces
+import type { PatientPartnerData as PatientPartnerDataI } from '../../../application/store/patient-form/patient-form-state.interface'
 
 
-export const PatientPartnerData = () => {
+interface PatientPartnerDataProps {
+	partnerData: PatientPartnerDataI;
+	onChange: (data: Partial<PatientPartnerDataI>) => void;
+}
 
-	const { partnerData, handleUpdatePartnerData } = useCreatePatient()
+export const PatientPartnerData = ({ partnerData, onChange }: PatientPartnerDataProps) => {
 
 	return (
 		
@@ -16,7 +21,7 @@ export const PatientPartnerData = () => {
 					label='Nombre de la pareja'
 					value={partnerData.name}
 					placeholder='Ej: Andrea Hernández'
-					onChange={(value) => handleUpdatePartnerData({ name: value })}
+					onChange={(value) => onChange({ name: value })}
 				/>
 			</div>
 		
@@ -25,7 +30,7 @@ export const PatientPartnerData = () => {
 					label='Edad'
 					value={partnerData.age}
 					placeholder='Ej: 30'
-					onChange={(value) => handleUpdatePartnerData({ age: value })}
+					onChange={(value) => onChange({ age: value })}
 				/>
 			</div>
 		
@@ -34,7 +39,7 @@ export const PatientPartnerData = () => {
 					label='Tiempo de relación'
 					value={partnerData.relationshipTime}
 					placeholder='Ej: 5 años'
-					onChange={(value) => handleUpdatePartnerData({ relationshipTime: value })}
+					onChange={(value) => onChange({ relationshipTime: value })}
 				/>
 			</div>
 		

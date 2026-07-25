@@ -3,12 +3,17 @@ import { VBInputText } from '../../../../../ui/Components/Inputs/VBInputText'
 import { VBInputSelect } from '../../../../../ui/Components/Inputs/VBInputSelect'
 import { schoolGrades } from '../../../../../common/catalogs/school-grades.catalog'
 import { marritage } from '../../../../../common/catalogs/marritage.catalog'
-import { useCreatePatient } from '../../../hooks/useCreatePatient'
+
+//* Interfaces
+import type { PatientPersonalData as PatientPersonalDataI } from '../../../application/store/patient-form/patient-form-state.interface'
 
 
-export const PatientPersonalData = () => {
+interface PatientPersonalDataProps {
+	personalData: PatientPersonalDataI;
+	onChange: (data: Partial<PatientPersonalDataI>) => void;
+}
 
-	const { personalData, handleUpdatePersonalData } = useCreatePatient()
+export const PatientPersonalData = ({ personalData, onChange }: PatientPersonalDataProps) => {
 
 	return (
 		
@@ -19,7 +24,7 @@ export const PatientPersonalData = () => {
 					label='Nombre'
 					value={personalData.name}
 					placeholder='Ej: Monica Vera'
-					onChange={(value) => handleUpdatePersonalData({ name: value })}
+					onChange={(value) => onChange({ name: value })}
 				/>
 			</div>
 		
@@ -28,7 +33,7 @@ export const PatientPersonalData = () => {
 					label='Edad'
 					value={personalData.age}
 					placeholder='Ej: 18'
-					onChange={(value) => handleUpdatePersonalData({ age: value })}
+					onChange={(value) => onChange({ age: value })}
 				/>
 			</div>
 		
@@ -37,7 +42,7 @@ export const PatientPersonalData = () => {
 					label='Teléfono'
 					value={personalData.phone}
 					placeholder='Ej: 55 5555 5555'
-					onChange={(value) => handleUpdatePersonalData({ phone: value })}
+					onChange={(value) => onChange({ phone: value })}
 				/>
 			</div>
 		
@@ -47,7 +52,7 @@ export const PatientPersonalData = () => {
 					value={personalData.schoolGrade}
 					placeholder='Elije un grado escolar'
 					options={schoolGrades}
-					onChange={(value) => handleUpdatePersonalData({ schoolGrade: value })}
+					onChange={(value) => onChange({ schoolGrade: value })}
 				/>
 			</div>
 
@@ -56,7 +61,7 @@ export const PatientPersonalData = () => {
 					label='Ocupación'
 					value={personalData.occupation}
 					placeholder='Ej: Psicólogo'
-					onChange={(value) => handleUpdatePersonalData({ occupation: value })}
+					onChange={(value) => onChange({ occupation: value })}
 				/>
 			</div>
 
@@ -66,7 +71,7 @@ export const PatientPersonalData = () => {
 					value={personalData.maritalStatus}
 					placeholder='Elije un estado civil'
 					options={marritage}
-					onChange={(value) => handleUpdatePersonalData({ maritalStatus: value })}
+					onChange={(value) => onChange({ maritalStatus: value })}
 				/>
 			</div>
 		
@@ -75,7 +80,7 @@ export const PatientPersonalData = () => {
 					label='Religión'
 					value={personalData.religion}
 					placeholder='Ej: Católico'
-					onChange={(value) => handleUpdatePersonalData({ religion: value })}
+					onChange={(value) => onChange({ religion: value })}
 				/>
 			</div>
 		
@@ -84,7 +89,7 @@ export const PatientPersonalData = () => {
 					label='Dirección'
 					value={personalData.address}
 					placeholder='Ej: Colmena, Nicolás Romero, Edo. Mex'
-					onChange={(value) => handleUpdatePersonalData({ address: value })}
+					onChange={(value) => onChange({ address: value })}
 				/>
 			</div>
 		

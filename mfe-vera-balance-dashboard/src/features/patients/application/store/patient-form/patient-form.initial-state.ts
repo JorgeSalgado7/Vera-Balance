@@ -1,6 +1,6 @@
-import type { CreatePatientState } from './create-patient-state.interface';
+import type { PatientFormState } from './patient-form-state.interface';
 
-export const createPatientInitialState: CreatePatientState = {
+export const patientFormInitialState: PatientFormState = {
 	personalData: {
 		name: '',
 		age: '',

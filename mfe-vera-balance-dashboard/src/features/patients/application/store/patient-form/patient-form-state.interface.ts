@@ -1,4 +1,4 @@
-export interface CreatePatientPersonalData {
+export interface PatientPersonalData {
 	name: string;
 	age: string;
 	phone: string;
@@ -9,7 +9,7 @@ export interface CreatePatientPersonalData {
 	address: string;
 }
 
-export interface CreatePatientTherapyData {
+export interface PatientTherapyData {
 	therapist: string;
 	startDate: string;
 	therapyType: string;
@@ -18,20 +18,20 @@ export interface CreatePatientTherapyData {
 	objectives: string;
 }
 
-export interface CreatePatientGuardianData {
+export interface PatientGuardianData {
 	name: string;
 	age: string;
 	relationship: string;
 	phone: string;
 }
 
-export interface CreatePatientPartnerData {
+export interface PatientPartnerData {
 	name: string;
 	age: string;
 	relationshipTime: string;
 }
 
-export interface CreatePatientSecondPatientData {
+export interface SecondPatientData {
 	name: string;
 	age: string;
 	phone: string;
@@ -42,10 +42,10 @@ export interface CreatePatientSecondPatientData {
 	address: string;
 }
 
-export interface CreatePatientState {
-	personalData: CreatePatientPersonalData;
-	therapyData: CreatePatientTherapyData;
-	guardianData: CreatePatientGuardianData;
-	partnerData: CreatePatientPartnerData;
-	secondPatientData: CreatePatientSecondPatientData;
+export interface PatientFormState {
+	personalData: PatientPersonalData;
+	therapyData: PatientTherapyData;
+	guardianData: PatientGuardianData;
+	partnerData: PatientPartnerData;
+	secondPatientData: SecondPatientData;
 }

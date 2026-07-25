@@ -3,12 +3,17 @@ import { VBInputText } from '../../../../../ui/Components/Inputs/VBInputText'
 import { VBInputSelect } from '../../../../../ui/Components/Inputs/VBInputSelect'
 import { schoolGrades } from '../../../../../common/catalogs/school-grades.catalog'
 import { marritage } from '../../../../../common/catalogs/marritage.catalog'
-import { useCreatePatient } from '../../../hooks/useCreatePatient'
+
+//* Interfaces
+import type { SecondPatientData as SecondPatientDataI } from '../../../application/store/patient-form/patient-form-state.interface'
 
 
-export const SecondPatientData = () => {
+interface SecondPatientDataProps {
+	secondPatientData: SecondPatientDataI;
+	onChange: (data: Partial<SecondPatientDataI>) => void;
+}
 
-	const { secondPatientData, handleUpdateSecondPatientData } = useCreatePatient()
+export const SecondPatientData = ({ secondPatientData, onChange }: SecondPatientDataProps) => {
 
 	return (
 		
@@ -19,7 +24,7 @@ export const SecondPatientData = () => {
 					label='Nombre'
 					value={secondPatientData.name}
 					placeholder='Ej: Andrea Hernández'
-					onChange={(value) => handleUpdateSecondPatientData({ name: value })}
+					onChange={(value) => onChange({ name: value })}
 				/>
 			</div>
 		
@@ -28,7 +33,7 @@ export const SecondPatientData = () => {
 					label='Edad'
 					value={secondPatientData.age}
 					placeholder='Ej: 30'
-					onChange={(value) => handleUpdateSecondPatientData({ age: value })}
+					onChange={(value) => onChange({ age: value })}
 				/>
 			</div>
 		
@@ -37,7 +42,7 @@ export const SecondPatientData = () => {
 					label='Teléfono'
 					value={secondPatientData.phone}
 					placeholder='Ej: 55 5555 5555'
-					onChange={(value) => handleUpdateSecondPatientData({ phone: value })}
+					onChange={(value) => onChange({ phone: value })}
 				/>
 			</div>
 		
@@ -47,7 +52,7 @@ export const SecondPatientData = () => {
 					value={secondPatientData.schoolGrade}
 					placeholder='Elije un grado escolar'
 					options={schoolGrades}
-					onChange={(value) => handleUpdateSecondPatientData({ schoolGrade: value })}
+					onChange={(value) => onChange({ schoolGrade: value })}
 				/>
 			</div>
 
@@ -56,7 +61,7 @@ export const SecondPatientData = () => {
 					label='Ocupación'
 					value={secondPatientData.occupation}
 					placeholder='Ej: Psicólogo'
-					onChange={(value) => handleUpdateSecondPatientData({ occupation: value })}
+					onChange={(value) => onChange({ occupation: value })}
 				/>
 			</div>
 
@@ -66,7 +71,7 @@ export const SecondPatientData = () => {
 					value={secondPatientData.maritalStatus}
 					placeholder='Elije un estado civil'
 					options={marritage}
-					onChange={(value) => handleUpdateSecondPatientData({ maritalStatus: value })}
+					onChange={(value) => onChange({ maritalStatus: value })}
 				/>
 			</div>
 		
@@ -75,7 +80,7 @@ export const SecondPatientData = () => {
 					label='Religión'
 					value={secondPatientData.religion}
 					placeholder='Ej: Católico'
-					onChange={(value) => handleUpdateSecondPatientData({ religion: value })}
+					onChange={(value) => onChange({ religion: value })}
 				/>
 			</div>
 		
@@ -84,7 +89,7 @@ export const SecondPatientData = () => {
 					label='Dirección'
 					value={secondPatientData.address}
 					placeholder='Ej: Colmena, Nicolás Romero, Edo. Mex'
-					onChange={(value) => handleUpdateSecondPatientData({ address: value })}
+					onChange={(value) => onChange({ address: value })}
 				/>
 			</div>
 		

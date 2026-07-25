@@ -2,12 +2,17 @@
 import { VBInputText } from '../../../../../ui/Components/Inputs/VBInputText'
 import { VBInputSelect } from '../../../../../ui/Components/Inputs/VBInputSelect'
 import { relationship } from '../../../../../common/catalogs/relationship.catalog'
-import { useCreatePatient } from '../../../hooks/useCreatePatient'
+
+//* Interfaces
+import type { PatientGuardianData as PatientGuardianDataI } from '../../../application/store/patient-form/patient-form-state.interface'
 
 
-export const PatientGuardianData = () => {
+interface PatientGuardianDataProps {
+	guardianData: PatientGuardianDataI;
+	onChange: (data: Partial<PatientGuardianDataI>) => void;
+}
 
-	const { guardianData, handleUpdateGuardianData } = useCreatePatient()
+export const PatientGuardianData = ({ guardianData, onChange }: PatientGuardianDataProps) => {
 
 	return (
 		
@@ -18,7 +23,7 @@ export const PatientGuardianData = () => {
 					label='Nombre del tutor o responsable'
 					value={guardianData.name}
 					placeholder='Ej: María López'
-					onChange={(value) => handleUpdateGuardianData({ name: value })}
+					onChange={(value) => onChange({ name: value })}
 				/>
 			</div>
 		
@@ -27,7 +32,7 @@ export const PatientGuardianData = () => {
 					label='Edad'
 					value={guardianData.age}
 					placeholder='Ej: 40'
-					onChange={(value) => handleUpdateGuardianData({ age: value })}
+					onChange={(value) => onChange({ age: value })}
 				/>
 			</div>
 		
@@ -36,7 +41,7 @@ export const PatientGuardianData = () => {
 					label='Teléfono'
 					value={guardianData.phone}
 					placeholder='Ej: 55 5555 5555'
-					onChange={(value) => handleUpdateGuardianData({ phone: value })}
+					onChange={(value) => onChange({ phone: value })}
 				/>
 			</div>
 		
@@ -46,7 +51,7 @@ export const PatientGuardianData = () => {
 					value={guardianData.relationship}
 					placeholder='Selecciona el parentesco'
 					options={relationship}
-					onChange={(value) => handleUpdateGuardianData({ relationship: value })}
+					onChange={(value) => onChange({ relationship: value })}
 				/>
 			</div>
 		

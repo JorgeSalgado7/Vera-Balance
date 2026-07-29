@@ -41,6 +41,10 @@ button {
 	i {
 		margin-right: 10px;
 	}
+
+	&.vb_btn--full {
+		width: 100%;
+	}
 }
 
 .vb-btn-circular {

@@ -16,6 +16,7 @@ import { VBLoadingModal } from "../../../../ui/Components/Modals/VBLoadingModal"
 //* Hooks
 import { usePatientForm } from "../../hooks/usePatientForm";
 import { useEditPatient } from "../../hooks/useEditPatient";
+import { VBButton } from '../../../../ui/Components/VBButton';
 
 export const EditPatient = () => {
 
@@ -120,7 +121,7 @@ export const EditPatient = () => {
 								<VBTitleSection step={`${therapyStep}`} title={'Sobre la terapia'}/>
 								<TherapyData therapyData={therapyData} onChange={handleUpdateTherapyData}/>
 
-								<button className="vb_btn vb_btn--pink"type="submit">Guardar cambios</button>
+								<VBButton>Guardar cambios</VBButton>
 							</>
 						}
 

@@ -15,6 +15,7 @@ import { VBLoadingModal } from "../../../../ui/Components/Modals/VBLoadingModal"
 //* Hooks
 import { usePatientForm } from "../../hooks/usePatientForm";
 import { useCreatePatient } from "../../hooks/useCreatePatient";
+import { VBButton } from '../../../../ui/Components/VBButton';
 
 export const CreatePatient = () => {
 
@@ -101,7 +102,8 @@ export const CreatePatient = () => {
 								<VBTitleSection step={`${therapyStep}`} title={'Sobre la terapia'}/>
 								<TherapyData therapyData={therapyData} onChange={handleUpdateTherapyData}/>
 
-								<button className="vb_btn vb_btn--pink"type="submit">Crear paciente</button>
+								<VBButton>Crear paciente</VBButton>
+
 							</>
 						}
 

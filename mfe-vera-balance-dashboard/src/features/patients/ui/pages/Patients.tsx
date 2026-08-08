@@ -3,7 +3,6 @@ import {
 	Avatar,
 	Button,
 	Dropdown,
-	Modal,
 	Table,
 	type MenuProps,
 	type TableColumnsType
@@ -25,6 +24,7 @@ import { VBPageHeader } from '../../../../ui/Components/VBPageHeader';
 import { VBPageTools } from '../../../../ui/Components/VBPageTools';
 import { VBSearchInput } from '../../../../ui/Components/VBSearchInput';
 import { VBEmptyState } from '../../../../ui/Components/VBEmptyState';
+import { VBConfirmModal } from '../../../../ui/Components/Modals/VBConfirmModal';
 import { PatientStatusTag } from '../components/PatientStatusTag';
 import { PatientTherapyTypes } from '../components/PatientTherapyTypes';
 
@@ -77,6 +77,8 @@ export const Patients = () => {
 	const { patients, isLoading, handleChangePatientStatus } = usePatients();
 
 	const [search, setSearch] = useState('');
+	const [patientToChangeStatus, setPatientToChangeStatus] = useState<PatientListItem | null>(null);
+	const [nextPatientStatus, setNextPatientStatus] = useState<PatientStatus | null>(null);
 
 	const filteredPatients = useMemo(() => {
 		const normalizedSearch = normalizeText(search);
@@ -88,20 +90,23 @@ export const Patients = () => {
 		return patients.filter((patient) => normalizeText(patient.name).includes(normalizedSearch));
 	}, [patients, search]);
 
-	const handleStatusChange = (patient: PatientListItem, nextStatus: PatientStatus) => {
-		const isActivation = nextStatus === PATIENT_STATUS.ACTIVE;
+	const handleOpenStatusModal = (patient: PatientListItem, nextStatus: PatientStatus) => {
+		setPatientToChangeStatus(patient);
+		setNextPatientStatus(nextStatus);
+	};
 
-		Modal.confirm({
-			title: isActivation ? '¿Deseas reactivar al paciente?' : '¿Deseas desactivar al paciente?',
-			content: patient.name,
-			okText: isActivation ? 'Reactivar' : 'Desactivar',
-			cancelText: 'Cancelar',
-			centered: true,
-			okButtonProps: { danger: !isActivation },
-			onOk: () => {
-				handleChangePatientStatus(patient.id, nextStatus);
-			}
-		});
+	const handleCloseStatusModal = () => {
+		setPatientToChangeStatus(null);
+		setNextPatientStatus(null);
+	};
+
+	const handleConfirmStatusChange = () => {
+		if (!patientToChangeStatus || !nextPatientStatus) {
+			return;
+		}
+
+		handleChangePatientStatus(patientToChangeStatus.id, nextPatientStatus);
+		handleCloseStatusModal();
 	};
 
 	const getPatientActions = (patient: PatientListItem): MenuProps['items'] => {
@@ -113,14 +118,14 @@ export const Patients = () => {
 						key: 'activate',
 						icon: <PlayCircleOutlined />,
 						label: 'Reactivar paciente',
-						onClick: () => handleStatusChange(patient, PATIENT_STATUS.ACTIVE)
+						onClick: () => handleOpenStatusModal(patient, PATIENT_STATUS.ACTIVE)
 					}
 				: {
 						key: 'deactivate',
 						icon: <PauseCircleOutlined />,
 						label: 'Desactivar paciente',
 						danger: true,
-						onClick: () => handleStatusChange(patient, PATIENT_STATUS.INACTIVE)
+						onClick: () => handleOpenStatusModal(patient, PATIENT_STATUS.INACTIVE)
 					};
 
 		return [
@@ -220,6 +225,8 @@ export const Patients = () => {
 		}
 	];
 
+	const isActivation = nextPatientStatus === PATIENT_STATUS.ACTIVE;
+
 	return (
 		<DasboardLayout>
 
@@ -280,6 +287,18 @@ export const Patients = () => {
 				</VBCard>
 
 			</div>
+
+			<VBConfirmModal
+				isOpen={patientToChangeStatus !== null}
+				title={isActivation ? '¿Deseas reactivar al paciente?' : '¿Deseas desactivar al paciente?'}
+				description={patientToChangeStatus?.name}
+				icon={isActivation ? 'person-check' : 'person-dash'}
+				iconColor={isActivation ? 'pink' : 'red'}
+				confirmText={isActivation ? 'Reactivar' : 'Desactivar'}
+				confirmButtonType={isActivation ? 'pink' : 'red'}
+				onConfirm={handleConfirmStatusChange}
+				onCancel={handleCloseStatusModal}
+			/>
 
 		</DasboardLayout>
 	);

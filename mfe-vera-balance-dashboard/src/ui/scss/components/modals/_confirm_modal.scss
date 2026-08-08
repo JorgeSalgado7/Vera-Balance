@@ -4,8 +4,8 @@
 .confirm_modal {
 
 	.ant-modal-content {
-		border-radius: 10px;
-		padding: 30px;
+		border-radius: 12px;
+		padding: 30px 12px;
 	}
 
 	&__content {
@@ -16,7 +16,7 @@
 		width: 70px;
 		height: 70px;
 		border-radius: 100%;
-		margin: 0 auto 20px;
+		margin: 0 auto 12px;
 
 		@include flex_mixin.flex_mixin($align: center,
 			$justify: center);
@@ -31,6 +31,7 @@
 			i {
 				color: colors.$pink;
 			}
+
 		}
 
 		&--red {
@@ -39,12 +40,13 @@
 			i {
 				color: colors.$red;
 			}
+
 		}
 
 	}
 
 	h2 {
-		margin-bottom: 10px !important;
+		margin-bottom: 6px !important;
 	}
 
 	&__description {
@@ -53,31 +55,29 @@
 	}
 
 	&__actions {
-
-		@include flex_mixin.flex_mixin($align: center,
-			$justify: center,
-			$gap: 15px);
-
+		@include flex_mixin.flex_mixin($align: center, $justify: center, $direction: column, $gap: 12px);
 		margin-top: 30px;
 
 		button {
+			width: 100%;
 			min-width: 130px;
 		}
 
 	}
 
-	@media(max-width: 576px) {
+	@media(min-width: 576px) {
 
 		.ant-modal-content {
-			padding: 25px 20px;
+			padding: 30px;
 		}
 
 		&__actions {
-			flex-direction: column;
+			flex-direction: row;
 
 			button {
-				width: 100%;
+				width: auto;
 			}
+
 		}
 
 	}

@@ -1,5 +1,9 @@
 import { Modal } from 'antd';
 
+//* Components
+import { VBButton } from '../VBButton';
+
+//* Interfaces
 import type { ConfirmModalI } from '../../Interfaces/Components/confirm-modal.interface';
 
 export const VBConfirmModal = ({
@@ -23,7 +27,7 @@ export const VBConfirmModal = ({
 			centered
 			closable={false}
 			maskClosable={!isLoading}
-			destroyOnClose
+			destroyOnHidden
 			className='confirm_modal'
 			onCancel={onCancel}
 		>
@@ -32,41 +36,40 @@ export const VBConfirmModal = ({
 
 				{
 					icon &&
-					<div className={`confirm_modal__icon confirm_modal__icon--${iconColor}`}>
-						<i className={`bi bi-${icon}`}></i>
-					</div>
+						<div className={`confirm_modal__icon confirm_modal__icon--${iconColor}`}>
+							<i className={`bi bi-${icon}`}></i>
+						</div>
 				}
 
 				<h2>{title}</h2>
 
 				{
 					description &&
-					<p className='confirm_modal__description'>
-						{description}
-					</p>
+						<p className='confirm_modal__description'>
+							{description}
+						</p>
 				}
 
 				{children}
 
 				<div className='confirm_modal__actions'>
 
-					<button
-						type='button'
-						className='vb_btn'
-						onClick={onCancel}
+					<VBButton
+						variant='outline'
+						color='pink'
 						disabled={isLoading}
+						onClick={onCancel}
 					>
 						{cancelText}
-					</button>
+					</VBButton>
 
-					<button
-						type='button'
-						className={`vb_btn vb_btn--${confirmButtonType}`}
+					<VBButton
+						color={confirmButtonType}
+						loading={isLoading}
 						onClick={onConfirm}
-						disabled={isLoading}
 					>
 						{confirmText}
-					</button>
+					</VBButton>
 
 				</div>
 

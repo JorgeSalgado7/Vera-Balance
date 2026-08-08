@@ -3,8 +3,6 @@ import {
 	Avatar,
 	Button,
 	Dropdown,
-	Empty,
-	Input,
 	Modal,
 	Table,
 	type MenuProps,
@@ -16,18 +14,31 @@ import {
 	EditOutlined,
 	PauseCircleOutlined,
 	PlayCircleOutlined,
-	PlusOutlined,
-	SearchOutlined
+	PlusOutlined
 } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router';
+
+//* Components
 import { DasboardLayout } from '../../../../ui/Layouts/DashboardLayouts/DasboardLayout';
 import { VBCard } from '../../../../ui/Components/VBCard';
+import { VBPageHeader } from '../../../../ui/Components/VBPageHeader';
+import { VBPageTools } from '../../../../ui/Components/VBPageTools';
+import { VBSearchInput } from '../../../../ui/Components/VBSearchInput';
+import { VBEmptyState } from '../../../../ui/Components/VBEmptyState';
 import { PatientStatusTag } from '../components/PatientStatusTag';
 import { PatientTherapyTypes } from '../components/PatientTherapyTypes';
+
+//* Hooks
 import { usePatients } from '../../hooks/usePatients';
+
+//* Interfaces
 import type { PatientListItem } from '../../domain/interfaces/patient.interface';
+
+//* Catalogs
 import { PATIENT_STATUS, type PatientStatus } from '../../../../common/catalogs/patient-status.catalog';
 import type { TherapyType } from '../../../../common/catalogs/therapy-type.catalog';
+
+//* Constants
 import { ROUTES } from '../../../../common/constants/routes.constant';
 
 const normalizeText = (value: string): string => {
@@ -87,7 +98,8 @@ export const Patients = () => {
 			cancelText: 'Cancelar',
 			centered: true,
 			okButtonProps: { danger: !isActivation },
-			onOk: () => { handleChangePatientStatus(patient.id, nextStatus);
+			onOk: () => {
+				handleChangePatientStatus(patient.id, nextStatus);
 			}
 		});
 	};
@@ -122,7 +134,7 @@ export const Patients = () => {
 				key: 'edit',
 				icon: <EditOutlined />,
 				label: 'Editar paciente',
-				onClick: () => navigate(`${ROUTES.PATIENTS.EDIT(patient.id)}`)
+				onClick: () => navigate(ROUTES.PATIENTS.EDIT(patient.id))
 			},
 			{
 				type: 'divider'
@@ -171,7 +183,7 @@ export const Patients = () => {
 			width: 180,
 			responsive: ['sm'],
 			render: (lastSessionAt: string | null) => (
-				<span className={ lastSessionAt ? 'patient_last_session' : 'patient_last_session patient_last_session--empty' }>
+				<span className={lastSessionAt ? 'patient_last_session' : 'patient_last_session patient_last_session--empty'}>
 					{formatLastSession(lastSessionAt)}
 				</span>
 			)
@@ -210,40 +222,40 @@ export const Patients = () => {
 
 	return (
 		<DasboardLayout>
-			<div className="patients">
-				<VBCard customClass="patients__table">
-					<div className="patients__table__header">
-						<div>
-							<h2>Mis pacientes</h2>
-							<p>Consulta y administra los expedientes de tus pacientes.</p>
-						</div>
 
+			<div className="patients">
+
+				<VBCard customClass="patients__table">
+
+					<VBPageHeader
+						title="Mis pacientes"
+						description="Consulta y administra los expedientes de tus pacientes."
+					>
 						<Link to={ROUTES.PATIENTS.CREATE} className="vb_btn vb_btn-sm vb_btn--pink">
 							<PlusOutlined />
 							Crear paciente
 						</Link>
-					</div>
+					</VBPageHeader>
 
-					<div className="patients__table__tools">
-						<p className="patients__table__tools__count">
+					<VBPageTools>
+
+						<p className="patients__table__count">
 							Pacientes encontrados:{' '}
 							<strong>{ filteredPatients.length }</strong>
 						</p>
 
-						<Input
-							allowClear
+						<VBSearchInput
 							value={search}
-							prefix={ <SearchOutlined /> }
 							placeholder="Busca un paciente por nombre..."
-							className="patients__table__search"
-							onChange={ (event) => setSearch(event.target.value) }
+							onChange={setSearch}
 						/>
-					</div>
+
+					</VBPageTools>
 
 					<Table<PatientListItem>
 						rowKey="id"
 						loading={isLoading}
-						dataSource={ filteredPatients }
+						dataSource={filteredPatients}
 						columns={columns}
 						scroll={{ x: 760 }}
 						pagination={{
@@ -254,21 +266,21 @@ export const Patients = () => {
 						}}
 						locale={{
 							emptyText: (
-								<Empty
-									image={ Empty.PRESENTED_IMAGE_SIMPLE }
-									description={ search ? 'No encontramos pacientes con ese nombre.' : 'Aún no tienes pacientes registrados.' }
-								>
-									{!search && (
+								<VBEmptyState description={search ? 'No encontramos pacientes con ese nombre.' : 'Aún no tienes pacientes registrados.'}>
+									{ !search &&
 										<Link to={ROUTES.PATIENTS.CREATE} className="vb_btn vb_btn-sm vb_btn--pink">
 											Crear primer paciente
 										</Link>
-									)}
-								</Empty>
+									}
+								</VBEmptyState>
 							)
 						}}
 					/>
+
 				</VBCard>
+
 			</div>
+
 		</DasboardLayout>
 	);
 };

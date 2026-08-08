@@ -9,69 +9,25 @@
 	&__table {
 		width: 100%;
 
-		&__header {
-			@include flex-mixin($align: flex-start,
-				$justify: space-between,
-				$wrap: wrap,
-				$gap: 16px);
-			margin-bottom: 24px;
+		&__count {
+			margin: 0;
+			font-size: 14px;
+			font-weight: 400;
 
-			p {
-				margin-top: 6px;
-				font-size: 14px;
-				font-weight: 400;
-			}
-
-			.vb_btn {
-				flex-shrink: 0;
-				gap: 8px;
-
-				svg {
-					color: $white;
-				}
-			}
-		}
-
-		&__tools {
-			@include flex-mixin($align: center,
-				$justify: space-between,
-				$wrap: wrap,
-				$gap: 16px);
-			margin-bottom: 20px;
-
-			&__count {
-				margin: 0;
-				font-size: 14px;
-				font-weight: 400;
-
-				strong {
-					color: $pink;
-					font-weight: 600;
-				}
-			}
-		}
-
-		&__search {
-			width: 100%;
-			max-width: 340px;
-			height: 40px;
-
-			&:hover,
-			&:focus,
-			&.ant-input-affix-wrapper-focused {
-				border-color: $soft_pink;
-			}
-
-			svg {
+			strong {
 				color: $pink;
+				font-weight: 600;
 			}
+
 		}
+
 	}
+
 }
 
 .patient_name {
 	width: 100%;
-	@include flex-mixin($align: center, $gap: 12px);
+	@include flex_mixin($align: center, $gap: 12px);
 	text-align: left;
 
 	&:hover {
@@ -79,6 +35,7 @@
 		.patient_name__text {
 			color: $pink;
 		}
+
 	}
 
 	&__avatar {
@@ -92,24 +49,22 @@
 		font-weight: 600;
 		transition: color 0.2s;
 	}
+
 }
 
 .patient_therapy_types {
-	@include flex-mixin($align: center,
-		$wrap: wrap,
-		$gap: 6px);
+	@include flex_mixin($align: center, $wrap: wrap, $gap: 6px);
 
 	.ant-tag {
 		margin: 0;
-		padding: 3px 9px;
+		padding: 3px 6px;
 		border-radius: 12px;
 		font-size: 12px;
 		font-weight: 500;
 	}
 
 	&__item {
-		@include flex-mixin($align: center,
-			$gap: 6px);
+		@include flex_mixin($align: center, $gap: 6px);
 
 		i {
 			color: $pink;
@@ -119,7 +74,9 @@
 		span {
 			font-size: 12px;
 		}
+
 	}
+
 }
 
 .patient_status_tag {
@@ -140,30 +97,5 @@
 		font-style: italic;
 		font-weight: 400;
 	}
-}
 
-@media (max-width: 575px) {
-
-	.patients {
-
-		&__table {
-
-			&__header {
-				flex-direction: column;
-
-				.vb_btn {
-					width: 100%;
-				}
-			}
-
-			&__tools {
-				align-items: flex-start;
-				flex-direction: column;
-			}
-
-			&__search {
-				max-width: none;
-			}
-		}
-	}
 }

@@ -1,12 +1,11 @@
 //* Config
 @use './config/fonts';
 
-//* Ant
-@use './ant/table';
 
 //* Components
 @use './components/buttons';
 @use './components/card';
+@use './components/vb_table';
 @use './components/inputs/input';
 @use './components/inputs/select';
 @use './components/inputs/picker';

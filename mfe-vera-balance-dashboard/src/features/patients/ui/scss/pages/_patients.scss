@@ -25,6 +25,40 @@
 
 }
 
+.patient_mobile {
+	width: 100%;
+	@include flex_mixin($direction: column, $gap: 12px);
+
+	&__name {
+		width: fit-content;
+		color: $pink;
+		font-weight: 600;
+
+		&:hover {
+			color: $soft_pink;
+		}
+
+	}
+
+	&__actions {
+		@include flex_mixin($align: center, $gap: 6px);
+
+		a,
+		button {
+			color: $pink;
+			font-size: 14px;
+			font-weight: 500;
+
+			&:hover {
+				color: $soft_pink;
+			}
+
+		}
+
+	}
+
+}
+
 .patient_name {
 	width: 100%;
 	@include flex_mixin($align: center, $gap: 12px);

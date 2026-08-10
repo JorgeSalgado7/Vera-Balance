@@ -3,6 +3,7 @@ import {
 	Avatar,
 	Button,
 	Dropdown,
+	Grid,
 	Table,
 	type MenuProps,
 	type TableColumnsType
@@ -73,6 +74,7 @@ const formatLastSession = (date: string | null): string => {
 
 export const Patients = () => {
 	const navigate = useNavigate();
+	const screens = Grid.useBreakpoint();
 
 	const { patients, isLoading, handleChangePatientStatus } = usePatients();
 
@@ -148,12 +150,57 @@ export const Patients = () => {
 		];
 	};
 
-	const columns: TableColumnsType<PatientListItem> = [
+	const mobileColumns: TableColumnsType<PatientListItem> = [
+		{
+			key: 'patientMobile',
+			render: (_, patient) => {
+				const canReactivate = patient.status === PATIENT_STATUS.INACTIVE;
+
+				return (
+					<div className="patient_mobile">
+
+						<Link
+							to={ROUTES.PATIENTS.DETAIL(patient.id)}
+							className="patient_mobile__name"
+						>
+							{patient.name}
+						</Link>
+
+						<PatientTherapyTypes therapyTypes={patient.therapyTypes} />
+
+						<div className="patient_mobile__actions">
+
+							<Link to={ROUTES.PATIENTS.EDIT(patient.id)}>
+								Editar
+							</Link>
+
+							<span>|</span>
+
+							<button
+								type="button"
+								onClick={() => handleOpenStatusModal(
+									patient,
+									canReactivate
+										? PATIENT_STATUS.ACTIVE
+										: PATIENT_STATUS.INACTIVE
+								)}
+							>
+								{canReactivate ? 'Reactivar' : 'Desactivar'}
+							</button>
+
+						</div>
+
+					</div>
+				)
+			}
+		}
+	];
+
+	const desktopColumns: TableColumnsType<PatientListItem> = [
 		{
 			title: 'Nombre',
 			dataIndex: 'name',
 			key: 'name',
-			fixed: 'left',
 			width: 260,
 			render: (_, patient) => (
 				<button
@@ -176,7 +223,6 @@ export const Patients = () => {
 			dataIndex: 'therapyTypes',
 			key: 'therapyTypes',
 			width: 320,
-			responsive: ['md'],
 			render: (therapyTypes: TherapyType[]) => (
 				<PatientTherapyTypes therapyTypes={therapyTypes} />
 			)
@@ -186,7 +232,6 @@ export const Patients = () => {
 			dataIndex: 'lastSessionAt',
 			key: 'lastSessionAt',
 			width: 180,
-			responsive: ['sm'],
 			render: (lastSessionAt: string | null) => (
 				<span className={lastSessionAt ? 'patient_last_session' : 'patient_last_session patient_last_session--empty'}>
 					{formatLastSession(lastSessionAt)}
@@ -207,7 +252,6 @@ export const Patients = () => {
 			key: 'actions',
 			align: 'center',
 			width: 100,
-			fixed: 'right',
 			render: (_, patient) => (
 				<Dropdown
 					menu={{ items: getPatientActions(patient) }}
@@ -224,6 +268,8 @@ export const Patients = () => {
 			)
 		}
 	];
+
+	const columns = screens.md ? desktopColumns : mobileColumns;
 
 	const isActivation = nextPatientStatus === PATIENT_STATUS.ACTIVE;
 
@@ -264,7 +310,6 @@ export const Patients = () => {
 						loading={isLoading}
 						dataSource={filteredPatients}
 						columns={columns}
-						scroll={{ x: 760 }}
 						pagination={{
 							pageSize: 10,
 							showSizeChanger: false,

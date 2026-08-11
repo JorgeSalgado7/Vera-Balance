@@ -1,12 +1,8 @@
 import type { RootState } from '../../../../../store/store';
 
-const normalizeValue = (value: string): string => {
-	return value
-		.normalize('NFD')
-		.replace(/[\u0300-\u036f]/g, '')
-		.toLowerCase()
-		.trim();
-};
+//* Catalogs
+import { MARITAL_STATUS } from '../../../../../common/catalogs/marritage.catalog';
+import { THERAPY_TYPE } from '../../../../../common/catalogs/therapy-type.catalog';
 
 export const selectPatientForm = (state: RootState) => state.patientForm;
 export const selectPatientPersonalData = (state: RootState) => state.patientForm.personalData;
@@ -25,31 +21,20 @@ export const selectIsMinor = (state: RootState): boolean => {
 };
 
 export const selectHasPartner = (state: RootState): boolean => {
-	const maritalStatus = normalizeValue(state.patientForm.personalData.maritalStatus);
-
-	return [
-		'casado',
-		'casada',
-		'married',
-		'en una relacion',
-		'en pareja',
-		'relationship'
-	].includes(maritalStatus);
+	const maritalStatus = state.patientForm.personalData.maritalStatus;
+	return maritalStatus === MARITAL_STATUS.IN_RELATIONSHIP || maritalStatus === MARITAL_STATUS.MARRIED;
 };
 
 export const selectIsCouplesTherapy = (state: RootState): boolean => {
-	const therapyType = normalizeValue(state.patientForm.therapyData.therapyType);
+	return state.patientForm.therapyData.therapyType === THERAPY_TYPE.COUPLE;
+};
 
-	return [
-		'pareja',
-		'couple',
-		'couples',
-		'terapia de pareja'
-	].includes(therapyType);
+export const selectIsChildTherapy = (state: RootState): boolean => {
+	return state.patientForm.therapyData.therapyType === THERAPY_TYPE.CHILD;
 };
 
 export const selectShouldShowGuardianData = (state: RootState): boolean => {
-	return selectHasSelectedTherapyType(state) && selectIsMinor(state);
+	return selectHasSelectedTherapyType(state) && (selectIsMinor(state) || selectIsChildTherapy(state));
 };
 
 export const selectShouldShowPartnerData = (state: RootState): boolean => {

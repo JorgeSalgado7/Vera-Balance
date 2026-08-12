@@ -1,0 +1,1783 @@
+openapi: 3.2.1
+info:
+  title: BaaS Vera Balance Dashboard
+  summary: Vera Balance Dashboard API specification
+  description: Vera Balance Dashboard API specification
+  contact:
+    name: Jorge Salgado
+    email: jorge.salgado7@outlook.com
+  version: 1.0.0
+tags:
+- name: Auth
+  description: Autenticación y administración de sesión
+- name: Users
+  description: Administración de usuarios
+- name: Clinics
+  description: Administración de clínicas
+- name: Catalogs
+  description: Administración de catálogos
+- name: Patients
+  description: Administración de pacientes
+- name: Therapeutic Processes
+  description: Administración de procesos terapéuticos
+- name: Records
+  description: Administración de registros de sesión
+- name: Home Works
+  description: Administración de tareas
+paths:
+  /v1/auth/sign-in:
+    post:
+      tags:
+      - Auth
+      summary: Iniciar sesión
+      operationId: signIn
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignInRequest'
+            example:
+              email: terapeuta@verabalance.com
+              password: Password123!
+      responses:
+        '200':
+          description: Sesión iniciada correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+              example:
+                access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        '401':
+          description: Credenciales incorrectas
+  /v1/auth/sign-out:
+    post:
+      tags:
+      - Auth
+      summary: Cerrar sesión
+      operationId: signOut
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignOutRequest'
+            example:
+              id: 550e8400-e29b-41d4-a716-446655440000
+      responses:
+        '204':
+          description: Sesión cerrada correctamente
+  /v1/auth/verify:
+    post:
+      tags:
+      - Auth
+      summary: Verificar sesión
+      operationId: verifySession
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyTokenRequest'
+            example:
+              access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+      responses:
+        '200':
+          description: Sesión válida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+              example:
+                access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+  /v1/users:
+    post:
+      tags:
+      - Users
+      summary: Crear usuario
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+            example:
+              name: Mónica Vera
+              email: monica@verabalance.com
+              password: Password123
+              confirm_password: Password123
+              professional_license: '12345678'
+              clinic_id: 7cb3a81a-e137-4ef4-aafd-6e387c8c7390
+              role: therapist
+      responses:
+        '201':
+          description: Usuario creado correctamente
+    get:
+      tags:
+      - Users
+      summary: Obtener usuarios
+      operationId: getUsers
+      responses:
+        '200':
+          description: Usuarios obtenidos correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserResponse'
+              example:
+              - id: 8a9bf669-7079-4b85-a2fe-7c4d46d11f20
+                name: Mónica Vera
+                email: monica@verabalance.com
+                professional_license: '12345678'
+                role: therapist
+                clinic:
+                  id: 7cb3a81a-e137-4ef4-aafd-6e387c8c7390
+                  name: Vera Balance
+                  logo: null
+                status: active
+  /v1/users/{id}:
+    parameters:
+    - $ref: '#/components/parameters/UserId'
+    get:
+      tags:
+      - Users
+      summary: Obtener usuario
+      operationId: getUserById
+      responses:
+        '200':
+          description: Usuario obtenido correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+              example:
+                id: 8a9bf669-7079-4b85-a2fe-7c4d46d11f20
+                name: Mónica Vera
+                email: monica@verabalance.com
+                professional_license: '12345678'
+                role: therapist
+                clinic:
+                  id: 7cb3a81a-e137-4ef4-aafd-6e387c8c7390
+                  name: Vera Balance
+                  logo: null
+                status: active
+    put:
+      tags:
+      - Users
+      summary: Actualizar usuario
+      operationId: updateUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequest'
+            example:
+              name: Mónica Vera
+              email: monica@verabalance.com
+              professional_license: '12345678'
+              role: admin
+              status: active
+      responses:
+        '200':
+          description: Usuario actualizado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+              example:
+                id: 8a9bf669-7079-4b85-a2fe-7c4d46d11f20
+                name: Mónica Vera
+                email: monica@verabalance.com
+                professional_license: '12345678'
+                role: admin
+                clinic:
+                  id: 7cb3a81a-e137-4ef4-aafd-6e387c8c7390
+                  name: Vera Balance
+                  logo: null
+                status: active
+    delete:
+      tags:
+      - Users
+      summary: Eliminar usuario
+      operationId: deleteUser
+      responses:
+        '200':
+          description: Usuario eliminado correctamente
+  /v1/users/{id}/status:
+    parameters:
+    - $ref: '#/components/parameters/UserId'
+    patch:
+      tags:
+      - Users
+      summary: Cambiar estatus del usuario
+      operationId: changeUserStatus
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserStatusRequest'
+            example:
+              status: inactive
+      responses:
+        '200':
+          description: Estatus actualizado correctamente
+  /v1/users/reset-password:
+    patch:
+      tags:
+      - Users
+      summary: Cambiar contraseña del usuario
+      operationId: resetUserPassword
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetUserPasswordRequest'
+            example:
+              email: monica@verabalance.com
+              password: NewPassword123
+              confirm_password: NewPassword123
+      responses:
+        '200':
+          description: Contraseña actualizada correctamente
+  /v1/clinics:
+    post:
+      tags:
+      - Clinics
+      summary: Crear clínica
+      operationId: createClinic
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateClinicRequest'
+            example:
+              name: Vera Balance
+              logo: null
+              address: Nicolás Romero, Estado de México
+              phone_number: '5564838512'
+              therapy_types:
+              - name: Terapia individual
+                icon: bi bi-person
+              - name: Terapia de pareja
+                icon: bi bi-people
+              - name: Terapia infantil
+                icon: bi bi-balloon-heart
+              - name: Terapia familiar
+                icon: bi bi-house-heart
+      responses:
+        '201':
+          description: Clínica creada correctamente
+    get:
+      tags:
+      - Clinics
+      summary: Obtener clínicas
+      operationId: getClinics
+      responses:
+        '200':
+          description: Clínicas obtenidas correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClinicResponse'
+              example:
+              - id: 7cb3a81a-e137-4ef4-aafd-6e387c8c7390
+                name: Vera Balance
+                logo: null
+                address: Nicolás Romero, Estado de México
+                phone_number: '5564838512'
+                therapy_types:
+                - name: Terapia individual
+                  icon: bi bi-person
+                  id: 2377555e-1d91-4510-a499-f01734d83625
+                - name: Terapia de pareja
+                  icon: bi bi-people
+                  id: e9fdff57-c21f-42c2-9455-69e5962ec62a
+                - name: Terapia infantil
+                  icon: bi bi-balloon-heart
+                  id: 39f4519a-d327-43c2-9e42-5c2506c34743
+                - name: Terapia familiar
+                  icon: bi bi-house-heart
+                  id: d87e2d32-48b1-48d8-9c5d-52217cc705c8
+  /v1/clinics/{id}:
+    parameters:
+    - $ref: '#/components/parameters/ClinicId'
+    get:
+      tags:
+      - Clinics
+      summary: Obtener clínica
+      operationId: getClinicById
+      responses:
+        '200':
+          description: Clínica obtenida correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClinicResponse'
+              example:
+                id: 7cb3a81a-e137-4ef4-aafd-6e387c8c7390
+                name: Vera Balance
+                logo: null
+                address: Nicolás Romero, Estado de México
+                phone_number: '5564838512'
+                therapy_types:
+                - name: Terapia individual
+                  icon: bi bi-person
+                  id: 2377555e-1d91-4510-a499-f01734d83625
+                - name: Terapia de pareja
+                  icon: bi bi-people
+                  id: e9fdff57-c21f-42c2-9455-69e5962ec62a
+                - name: Terapia infantil
+                  icon: bi bi-balloon-heart
+                  id: 39f4519a-d327-43c2-9e42-5c2506c34743
+                - name: Terapia familiar
+                  icon: bi bi-house-heart
+                  id: d87e2d32-48b1-48d8-9c5d-52217cc705c8
+    put:
+      tags:
+      - Clinics
+      summary: Actualizar clínica
+      operationId: updateClinic
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateClinicRequest'
+            example:
+              name: Vera Balance
+              logo: null
+              address: Nicolás Romero, Estado de México
+              phone_number: '5564838512'
+              therapy_types:
+              - name: Terapia individual
+                icon: bi bi-person
+                id: 2377555e-1d91-4510-a499-f01734d83625
+              - name: Terapia de pareja
+                icon: bi bi-people
+                id: e9fdff57-c21f-42c2-9455-69e5962ec62a
+              - name: Terapia infantil
+                icon: bi bi-balloon-heart
+                id: 39f4519a-d327-43c2-9e42-5c2506c34743
+              - name: Terapia familiar
+                icon: bi bi-house-heart
+                id: d87e2d32-48b1-48d8-9c5d-52217cc705c8
+      responses:
+        '200':
+          description: Clínica actualizada correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClinicResponse'
+              example:
+                id: 7cb3a81a-e137-4ef4-aafd-6e387c8c7390
+                name: Vera Balance
+                logo: null
+                address: Nicolás Romero, Estado de México
+                phone_number: '5564838512'
+                therapy_types:
+                - name: Terapia individual
+                  icon: bi bi-person
+                  id: 2377555e-1d91-4510-a499-f01734d83625
+                - name: Terapia de pareja
+                  icon: bi bi-people
+                  id: e9fdff57-c21f-42c2-9455-69e5962ec62a
+                - name: Terapia infantil
+                  icon: bi bi-balloon-heart
+                  id: 39f4519a-d327-43c2-9e42-5c2506c34743
+                - name: Terapia familiar
+                  icon: bi bi-house-heart
+                  id: d87e2d32-48b1-48d8-9c5d-52217cc705c8
+  /v1/catalogs:
+    post:
+      tags:
+      - Catalogs
+      summary: Crear catálogo
+      operationId: createCatalog
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCatalogRequest'
+            example:
+              type: MARITAL_STATUS
+              name: Estado civil
+              options:
+              - Soltero
+              - En una relación
+              - Casado
+              - Divorciado
+              - Viudo
+      responses:
+        '201':
+          description: Catálogo creado correctamente
+    get:
+      tags:
+      - Catalogs
+      summary: Obtener catálogos
+      operationId: getCatalogs
+      responses:
+        '200':
+          description: Catálogos obtenidos correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CatalogResponse'
+              example:
+              - id: 7e55c7a5-5148-4561-9799-dfe9f8075808
+                type: MARITAL_STATUS
+                name: Estado civil
+                options:
+                - Soltero
+                - En una relación
+                - Casado
+                - Divorciado
+                - Viudo
+              - id: d861bf89-513a-4b99-9e17-f55f8d44a927
+                type: SEX
+                name: Sexo
+                options:
+                - Masculino
+                - Femenino
+  /v1/catalogs/{id}:
+    parameters:
+    - $ref: '#/components/parameters/CatalogId'
+    get:
+      tags:
+      - Catalogs
+      summary: Obtener catálogo
+      operationId: getCatalogById
+      responses:
+        '200':
+          description: Catálogo obtenido correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CatalogResponse'
+              example:
+                id: 7e55c7a5-5148-4561-9799-dfe9f8075808
+                type: MARITAL_STATUS
+                name: Estado civil
+                options:
+                - Soltero
+                - En una relación
+                - Casado
+                - Divorciado
+                - Viudo
+    patch:
+      tags:
+      - Catalogs
+      summary: Actualizar catálogo
+      operationId: updateCatalog
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCatalogRequest'
+            example:
+              name: Estado civil
+              options:
+              - Soltero
+              - En una relación
+              - Casado
+              - Divorciado
+              - Viudo
+      responses:
+        '200':
+          description: Catálogo actualizado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CatalogResponse'
+              example:
+                id: 7e55c7a5-5148-4561-9799-dfe9f8075808
+                type: MARITAL_STATUS
+                name: Estado civil
+                options:
+                - Soltero
+                - En una relación
+                - Casado
+                - Divorciado
+                - Viudo
+    delete:
+      tags:
+      - Catalogs
+      summary: Eliminar catálogo
+      operationId: deleteCatalog
+      responses:
+        '200':
+          description: Catálogo eliminado correctamente
+  /v1/patients:
+    post:
+      tags:
+      - Patients
+      summary: Crear paciente
+      operationId: createPatient
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePatientRequest'
+            example: &id010
+              name: Juan Pérez
+              age: 27
+              guardian: null
+              phone_number: '5512345678'
+              sex: Masculino
+              education: Licenciatura
+              occupation: Ingeniero
+              marital_status: En una relación
+              partner_data: &id001
+                name: María López
+                age: 26
+                relationship_time: 3 años
+                occupation: Arquitecta
+              religion: Católica
+              address: Nicolás Romero, Estado de México
+      responses:
+        '201':
+          description: Paciente creado correctamente
+    get:
+      tags:
+      - Patients
+      summary: Obtener pacientes
+      operationId: getPatients
+      responses:
+        '200':
+          description: Pacientes obtenidos correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PatientResponse'
+              example:
+              - &id002
+                id: 98e4819a-b171-46b9-8782-19bb80eb777c
+                name: Juan Pérez
+                age: 27
+                guardian: null
+                phone_number: '5512345678'
+                sex: Masculino
+                education: Licenciatura
+                occupation: Ingeniero
+                marital_status: En una relación
+                partner_data: *id001
+                religion: Católica
+                address: Nicolás Romero, Estado de México
+  /v1/patients/{id}:
+    parameters:
+    - $ref: '#/components/parameters/PatientId'
+    get:
+      tags:
+      - Patients
+      summary: Obtener paciente
+      operationId: getPatientById
+      responses:
+        '200':
+          description: Paciente obtenido correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PatientResponse'
+              example: *id002
+    put:
+      tags:
+      - Patients
+      summary: Actualizar paciente
+      operationId: updatePatient
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePatientRequest'
+            example:
+              phone_number: '5598765432'
+              occupation: Ingeniero de software
+              address: Nicolás Romero, Estado de México
+      responses:
+        '200':
+          description: Paciente actualizado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PatientResponse'
+              example:
+                id: 98e4819a-b171-46b9-8782-19bb80eb777c
+                name: Juan Pérez
+                age: 27
+                guardian: null
+                phone_number: '5598765432'
+                sex: Masculino
+                education: Licenciatura
+                occupation: Ingeniero de software
+                marital_status: En una relación
+                partner_data: *id001
+                religion: Católica
+                address: Nicolás Romero, Estado de México
+    delete:
+      tags:
+      - Patients
+      summary: Eliminar paciente
+      operationId: deletePatient
+      responses:
+        '200':
+          description: Paciente eliminado correctamente
+  /v1/therapeutic-processes:
+    post:
+      tags:
+      - Therapeutic Processes
+      summary: Crear proceso terapéutico
+      operationId: createTherapeuticProcess
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTherapeuticProcessRequest'
+            example: &id023
+              therapy_type_id: 2377555e-1d91-4510-a499-f01734d83625
+              therapist_id: 8a9bf669-7079-4b85-a2fe-7c4d46d11f20
+              patient_ids:
+              - 98e4819a-b171-46b9-8782-19bb80eb777c
+              first_time: true
+              consultation_reason: Ansiedad y dificultades para gestionar sus emociones.
+              goals: Desarrollar herramientas para la regulación emocional.
+      responses:
+        '201':
+          description: Proceso terapéutico creado correctamente
+    get:
+      tags:
+      - Therapeutic Processes
+      summary: Obtener procesos terapéuticos
+      operationId: getTherapeuticProcesses
+      responses:
+        '200':
+          description: Procesos terapéuticos obtenidos correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TherapeuticProcessResponse'
+              example:
+              - &id003
+                id: 668bcdda-ec9b-4b3a-872d-5a3e88a83d41
+                therapy_type: &id004
+                  id: 2377555e-1d91-4510-a499-f01734d83625
+                  name: Terapia individual
+                  icon: bi bi-person
+                therapist: &id005
+                  id: 8a9bf669-7079-4b85-a2fe-7c4d46d11f20
+                  name: Mónica Vera
+                patients: &id006
+                - id: 98e4819a-b171-46b9-8782-19bb80eb777c
+                  name: Juan Pérez
+                first_time: true
+                consultation_reason: Ansiedad y dificultades para gestionar sus emociones.
+                goals: Desarrollar herramientas para la regulación emocional.
+                status: active
+  /v1/therapeutic-processes/{id}:
+    parameters:
+    - $ref: '#/components/parameters/TherapeuticProcessId'
+    get:
+      tags:
+      - Therapeutic Processes
+      summary: Obtener proceso terapéutico
+      operationId: getTherapeuticProcessById
+      responses:
+        '200':
+          description: Proceso terapéutico obtenido correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TherapeuticProcessResponse'
+              example: *id003
+    put:
+      tags:
+      - Therapeutic Processes
+      summary: Actualizar proceso terapéutico
+      operationId: updateTherapeuticProcess
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTherapeuticProcessRequest'
+            example:
+              goals: Mejorar regulación emocional y comunicación.
+      responses:
+        '200':
+          description: Proceso terapéutico actualizado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TherapeuticProcessResponse'
+              example:
+                id: 668bcdda-ec9b-4b3a-872d-5a3e88a83d41
+                therapy_type: *id004
+                therapist: *id005
+                patients: *id006
+                first_time: true
+                consultation_reason: Ansiedad y dificultades para gestionar sus emociones.
+                goals: Mejorar regulación emocional y comunicación.
+                status: active
+    delete:
+      tags:
+      - Therapeutic Processes
+      summary: Eliminar proceso terapéutico
+      operationId: deleteTherapeuticProcess
+      responses:
+        '200':
+          description: Proceso terapéutico eliminado correctamente
+  /v1/therapeutic-processes/{id}/status:
+    parameters:
+    - $ref: '#/components/parameters/TherapeuticProcessId'
+    patch:
+      tags:
+      - Therapeutic Processes
+      summary: Cambiar estatus del proceso terapéutico
+      operationId: changeTherapeuticProcessStatus
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTherapeuticProcessStatusRequest'
+            example:
+              status: inactive
+      responses:
+        '200':
+          description: Estatus actualizado correctamente
+  /v1/therapeutic-processes/patient/{patientId}:
+    parameters:
+    - $ref: '#/components/parameters/PatientProcessId'
+    get:
+      tags:
+      - Therapeutic Processes
+      summary: Obtener procesos terapéuticos de un paciente
+      operationId: getTherapeuticProcessesByPatientId
+      responses:
+        '200':
+          description: Procesos terapéuticos obtenidos correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TherapeuticProcessResponse'
+              example:
+              - *id003
+  /v1/records:
+    post:
+      tags:
+      - Records
+      summary: Crear registro de sesión
+      operationId: createRecord
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRecordRequest'
+            example: &id024
+              therapeutic_process_id: 668bcdda-ec9b-4b3a-872d-5a3e88a83d41
+              session_date: '2026-08-12T17:00:00-06:00'
+              attendance: true
+              summary: Durante la sesión se trabajó en la identificación de emociones.
+              tools: Técnica de respiración y registro emocional.
+              new_home_work_ids:
+              - bc40e184-d62c-4579-b62d-566428514cdc
+              done_home_work_ids:
+              - 80534c76-b80c-4c91-91b2-ae4360b227c5
+      responses:
+        '201':
+          description: Registro de sesión creado correctamente
+    get:
+      tags:
+      - Records
+      summary: Obtener registros de sesión
+      operationId: getRecords
+      responses:
+        '200':
+          description: Registros de sesión obtenidos correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RecordResponse'
+              example:
+              - &id007
+                id: 8bfa07d5-e13f-4391-b224-a35d60b01c92
+                therapeutic_process_id: 668bcdda-ec9b-4b3a-872d-5a3e88a83d41
+                session_date: '2026-08-12T17:00:00-06:00'
+                attendance: true
+                summary: Durante la sesión se trabajó en la identificación de emociones.
+                tools: Técnica de respiración y registro emocional.
+                new_home_works: &id008
+                - id: bc40e184-d62c-4579-b62d-566428514cdc
+                  description: Realizar registro diario de emociones.
+                done_home_works: &id009
+                - id: 80534c76-b80c-4c91-91b2-ae4360b227c5
+                  description: Practicar respiración diafragmática.
+  /v1/records/{id}:
+    parameters:
+    - $ref: '#/components/parameters/RecordId'
+    get:
+      tags:
+      - Records
+      summary: Obtener registro de sesión
+      operationId: getRecordById
+      responses:
+        '200':
+          description: Registro de sesión obtenido correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecordResponse'
+              example: *id007
+    put:
+      tags:
+      - Records
+      summary: Actualizar registro de sesión
+      operationId: updateRecord
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRecordRequest'
+            example: &id025
+              session_date: '2026-08-12T17:30:00-06:00'
+              attendance: true
+              summary: Se trabajó identificación y regulación de emociones.
+              tools: Técnica de respiración y registro emocional.
+              new_home_work_ids:
+              - bc40e184-d62c-4579-b62d-566428514cdc
+              done_home_work_ids:
+              - 80534c76-b80c-4c91-91b2-ae4360b227c5
+      responses:
+        '200':
+          description: Registro de sesión actualizado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecordResponse'
+              example:
+                id: 8bfa07d5-e13f-4391-b224-a35d60b01c92
+                therapeutic_process_id: 668bcdda-ec9b-4b3a-872d-5a3e88a83d41
+                session_date: '2026-08-12T17:30:00-06:00'
+                attendance: true
+                summary: Se trabajó identificación y regulación de emociones.
+                tools: Técnica de respiración y registro emocional.
+                new_home_works: *id008
+                done_home_works: *id009
+    delete:
+      tags:
+      - Records
+      summary: Eliminar registro de sesión
+      operationId: deleteRecord
+      responses:
+        '200':
+          description: Registro de sesión eliminado correctamente
+  /v1/records/therapeutic-process/{therapeuticProcessId}:
+    parameters:
+    - $ref: '#/components/parameters/TherapeuticProcessRecordId'
+    get:
+      tags:
+      - Records
+      summary: Obtener registros de un proceso terapéutico
+      operationId: getRecordsByTherapeuticProcessId
+      responses:
+        '200':
+          description: Registros del proceso terapéutico obtenidos correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RecordResponse'
+              example:
+              - *id007
+  /v1/home-works:
+    post:
+      tags:
+      - Home Works
+      summary: Crear tarea
+      operationId: createHomeWork
+      responses:
+        '201':
+          description: Tarea creada correctamente
+    get:
+      tags:
+      - Home Works
+      summary: Obtener tareas
+      operationId: getHomeWorks
+      responses:
+        '200':
+          description: Tareas obtenidas correctamente
+  /v1/home-works/{id}:
+    parameters:
+    - $ref: '#/components/parameters/HomeWorkId'
+    get:
+      tags:
+      - Home Works
+      summary: Obtener tarea
+      operationId: getHomeWorkById
+      responses:
+        '200':
+          description: Tarea obtenida correctamente
+    put:
+      tags:
+      - Home Works
+      summary: Actualizar tarea
+      operationId: updateHomeWork
+      responses:
+        '200':
+          description: Tarea actualizada correctamente
+    delete:
+      tags:
+      - Home Works
+      summary: Eliminar tarea
+      operationId: deleteHomeWork
+      responses:
+        '204':
+          description: Tarea eliminada correctamente
+components:
+  parameters:
+    UserId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: 8a9bf669-7079-4b85-a2fe-7c4d46d11f20
+    ClinicId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: 7cb3a81a-e137-4ef4-aafd-6e387c8c7390
+    CatalogId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    PatientId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    TherapeuticProcessId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    PatientProcessId:
+      name: patientId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    RecordId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    TherapeuticProcessRecordId:
+      name: therapeuticProcessId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    HomeWorkId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+  schemas:
+    UserRole:
+      type: string
+      enum:
+      - admin
+      - therapist
+    UserStatus:
+      type: string
+      enum:
+      - active
+      - inactive
+    UserClinic:
+      type: object
+      required:
+      - id
+      - name
+      - logo
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        logo:
+          type:
+          - string
+          - 'null'
+      example:
+        id: 7cb3a81a-e137-4ef4-aafd-6e387c8c7390
+        name: Vera Balance
+        logo: null
+    CreateUserRequest:
+      type: object
+      required:
+      - name
+      - email
+      - password
+      - confirm_password
+      - professional_license
+      - clinic_id
+      - role
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+        confirm_password:
+          type: string
+          format: password
+        professional_license:
+          type: string
+        clinic_id:
+          type: string
+          format: uuid
+        role:
+          $ref: '#/components/schemas/UserRole'
+    UpdateUserRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        professional_license:
+          type: string
+        role:
+          $ref: '#/components/schemas/UserRole'
+        status:
+          $ref: '#/components/schemas/UserStatus'
+    UpdateUserStatusRequest:
+      type: object
+      required:
+      - status
+      properties:
+        status:
+          $ref: '#/components/schemas/UserStatus'
+    ResetUserPasswordRequest:
+      type: object
+      required:
+      - email
+      - password
+      - confirm_password
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+        confirm_password:
+          type: string
+          format: password
+    UserResponse:
+      type: object
+      required:
+      - id
+      - name
+      - email
+      - professional_license
+      - role
+      - clinic
+      - status
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        professional_license:
+          type: string
+        role:
+          $ref: '#/components/schemas/UserRole'
+        clinic:
+          $ref: '#/components/schemas/UserClinic'
+        status:
+          $ref: '#/components/schemas/UserStatus'
+    SignInRequest:
+      type: object
+      required:
+      - email
+      - password
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+      example:
+        email: terapeuta@verabalance.com
+        password: Password123!
+    SignOutRequest:
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          format: uuid
+      example:
+        id: 550e8400-e29b-41d4-a716-446655440000
+    VerifyTokenRequest:
+      type: object
+      required:
+      - access_token
+      properties:
+        access_token:
+          type: string
+      example:
+        access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+    AuthResponse:
+      type: object
+      required:
+      - access_token
+      properties:
+        access_token:
+          type: string
+      example:
+        access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+    TherapyType:
+      type: object
+      required:
+      - id
+      - name
+      - icon
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        icon:
+          type: string
+      example:
+        id: 2377555e-1d91-4510-a499-f01734d83625
+        name: Terapia individual
+        icon: bi bi-person
+    CreateClinicRequest:
+      type: object
+      required:
+      - name
+      - address
+      - phone_number
+      - therapy_types
+      properties:
+        name:
+          type: string
+        logo:
+          type:
+          - string
+          - 'null'
+        address:
+          type: string
+        phone_number:
+          type: string
+        therapy_types:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateClinicTherapyType'
+      example:
+        name: Vera Balance
+        logo: null
+        address: Nicolás Romero, Estado de México
+        phone_number: '5564838512'
+        therapy_types:
+        - name: Terapia individual
+          icon: bi bi-person
+        - name: Terapia de pareja
+          icon: bi bi-people
+        - name: Terapia infantil
+          icon: bi bi-balloon-heart
+        - name: Terapia familiar
+          icon: bi bi-house-heart
+    UpdateClinicRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        logo:
+          type:
+          - string
+          - 'null'
+        address:
+          type: string
+        phone_number:
+          type: string
+        therapy_types:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateClinicTherapyType'
+      example:
+        name: Vera Balance
+        logo: null
+        address: Nicolás Romero, Estado de México
+        phone_number: '5564838512'
+        therapy_types:
+        - name: Terapia individual
+          icon: bi bi-person
+          id: 2377555e-1d91-4510-a499-f01734d83625
+        - name: Terapia de pareja
+          icon: bi bi-people
+          id: e9fdff57-c21f-42c2-9455-69e5962ec62a
+        - name: Terapia infantil
+          icon: bi bi-balloon-heart
+          id: 39f4519a-d327-43c2-9e42-5c2506c34743
+        - name: Terapia familiar
+          icon: bi bi-house-heart
+          id: d87e2d32-48b1-48d8-9c5d-52217cc705c8
+    ClinicResponse:
+      type: object
+      required:
+      - id
+      - name
+      - logo
+      - address
+      - phone_number
+      - therapy_types
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        logo:
+          type:
+          - string
+          - 'null'
+        address:
+          type: string
+        phone_number:
+          type: string
+        therapy_types:
+          type: array
+          items:
+            $ref: '#/components/schemas/TherapyType'
+      example:
+        id: 7cb3a81a-e137-4ef4-aafd-6e387c8c7390
+        name: Vera Balance
+        logo: null
+        address: Nicolás Romero, Estado de México
+        phone_number: '5564838512'
+        therapy_types:
+        - name: Terapia individual
+          icon: bi bi-person
+          id: 2377555e-1d91-4510-a499-f01734d83625
+        - name: Terapia de pareja
+          icon: bi bi-people
+          id: e9fdff57-c21f-42c2-9455-69e5962ec62a
+        - name: Terapia infantil
+          icon: bi bi-balloon-heart
+          id: 39f4519a-d327-43c2-9e42-5c2506c34743
+        - name: Terapia familiar
+          icon: bi bi-house-heart
+          id: d87e2d32-48b1-48d8-9c5d-52217cc705c8
+    CreateCatalogRequest:
+      type: object
+      required:
+      - type
+      - name
+      - options
+      properties:
+        type:
+          type: string
+        name:
+          type: string
+        options:
+          type: array
+          items:
+            type: string
+      example:
+        type: MARITAL_STATUS
+        name: Estado civil
+        options:
+        - Soltero
+        - En una relación
+        - Casado
+        - Divorciado
+        - Viudo
+    UpdateCatalogRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        options:
+          type: array
+          items:
+            type: string
+      example:
+        name: Estado civil
+        options:
+        - Soltero
+        - En una relación
+        - Casado
+        - Divorciado
+        - Viudo
+    CatalogResponse:
+      type: object
+      required:
+      - id
+      - type
+      - name
+      - options
+      properties:
+        id:
+          type: string
+          format: uuid
+        type:
+          type: string
+        name:
+          type: string
+        options:
+          type: array
+          items:
+            type: string
+      example:
+        id: 7e55c7a5-5148-4561-9799-dfe9f8075808
+        type: MARITAL_STATUS
+        name: Estado civil
+        options:
+        - Soltero
+        - En una relación
+        - Casado
+        - Divorciado
+        - Viudo
+    PatientGuardian:
+      type: object
+      required:
+      - name
+      - phone_number
+      - relationship
+      properties:
+        name:
+          type: string
+        phone_number:
+          type: string
+        relationship:
+          type: string
+      example:
+        name: María Pérez
+        phone_number: '5512345678'
+        relationship: Madre
+    PatientPartner:
+      type: object
+      required:
+      - name
+      - age
+      - relationship_time
+      - occupation
+      properties:
+        name:
+          type: string
+        age:
+          type: integer
+          minimum: 0
+        relationship_time:
+          type: string
+        occupation:
+          type: string
+      example:
+        name: María López
+        age: 26
+        relationship_time: 3 años
+        occupation: Arquitecta
+    CreatePatientRequest:
+      type: object
+      required:
+      - name
+      - age
+      - phone_number
+      - sex
+      - education
+      - occupation
+      - marital_status
+      - religion
+      - address
+      properties: &id011
+        name: &id012
+          type: string
+        age: &id013
+          type: integer
+          minimum: 0
+        guardian: &id014
+          oneOf:
+          - $ref: '#/components/schemas/PatientGuardian'
+          - type: 'null'
+        phone_number: &id015
+          type: string
+        sex: &id016
+          type: string
+        education: &id017
+          type: string
+        occupation: &id018
+          type: string
+        marital_status: &id019
+          type: string
+        partner_data: &id020
+          oneOf:
+          - $ref: '#/components/schemas/PatientPartner'
+          - type: 'null'
+        religion: &id021
+          type: string
+        address: &id022
+          type: string
+      example: *id010
+    UpdatePatientRequest:
+      type: object
+      properties: *id011
+      example:
+        phone_number: '5598765432'
+        occupation: Ingeniero de software
+        address: Nicolás Romero, Estado de México
+    PatientResponse:
+      type: object
+      required:
+      - id
+      - name
+      - age
+      - guardian
+      - phone_number
+      - sex
+      - education
+      - occupation
+      - marital_status
+      - partner_data
+      - religion
+      - address
+      properties:
+        id:
+          type: string
+          format: uuid
+        name: *id012
+        age: *id013
+        guardian: *id014
+        phone_number: *id015
+        sex: *id016
+        education: *id017
+        occupation: *id018
+        marital_status: *id019
+        partner_data: *id020
+        religion: *id021
+        address: *id022
+      example: *id002
+    CreateClinicTherapyType:
+      type: object
+      required:
+      - name
+      - icon
+      properties:
+        name:
+          type: string
+        icon:
+          type: string
+      example:
+        name: Terapia individual
+        icon: bi bi-person
+    UpdateClinicTherapyType:
+      type: object
+      required:
+      - name
+      - icon
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+        name:
+          type: string
+        icon:
+          type: string
+      example:
+        id: 2377555e-1d91-4510-a499-f01734d83625
+        name: Terapia individual
+        icon: bi bi-person
+    TherapeuticProcessStatus:
+      type: string
+      enum:
+      - active
+      - inactive
+      - discharged
+      - unfinished
+    TherapeuticProcessTherapist:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+      example:
+        id: 8a9bf669-7079-4b85-a2fe-7c4d46d11f20
+        name: Mónica Vera
+    TherapeuticProcessPatient:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+      example:
+        id: 98e4819a-b171-46b9-8782-19bb80eb777c
+        name: Juan Pérez
+    CreateTherapeuticProcessRequest:
+      type: object
+      required:
+      - therapy_type_id
+      - therapist_id
+      - patient_ids
+      - first_time
+      - consultation_reason
+      - goals
+      properties:
+        therapy_type_id:
+          type: string
+          format: uuid
+        therapist_id:
+          type: string
+          format: uuid
+        patient_ids:
+          type: array
+          minItems: 1
+          items:
+            type: string
+            format: uuid
+        first_time:
+          type: boolean
+        consultation_reason:
+          type: string
+        goals:
+          type: string
+      example: *id023
+    UpdateTherapeuticProcessRequest:
+      type: object
+      properties:
+        therapy_type_id:
+          type: string
+          format: uuid
+        therapist_id:
+          type: string
+          format: uuid
+        patient_ids:
+          type: array
+          minItems: 1
+          items:
+            type: string
+            format: uuid
+        first_time:
+          type: boolean
+        consultation_reason:
+          type: string
+        goals:
+          type: string
+      example:
+        goals: Mejorar regulación emocional y comunicación.
+    UpdateTherapeuticProcessStatusRequest:
+      type: object
+      required:
+      - status
+      properties:
+        status:
+          $ref: '#/components/schemas/TherapeuticProcessStatus'
+      example:
+        status: inactive
+    TherapeuticProcessResponse:
+      type: object
+      required:
+      - id
+      - therapy_type
+      - therapist
+      - patients
+      - first_time
+      - consultation_reason
+      - goals
+      - status
+      properties:
+        id:
+          type: string
+          format: uuid
+        therapy_type:
+          $ref: '#/components/schemas/TherapyType'
+        therapist:
+          $ref: '#/components/schemas/TherapeuticProcessTherapist'
+        patients:
+          type: array
+          items:
+            $ref: '#/components/schemas/TherapeuticProcessPatient'
+        first_time:
+          type: boolean
+        consultation_reason:
+          type: string
+        goals:
+          type: string
+        status:
+          $ref: '#/components/schemas/TherapeuticProcessStatus'
+      example: *id003
+    RecordHomeWork:
+      type: object
+      required:
+      - id
+      - description
+      properties:
+        id:
+          type: string
+          format: uuid
+        description:
+          type: string
+      example:
+        id: bc40e184-d62c-4579-b62d-566428514cdc
+        description: Realizar registro diario de emociones.
+    CreateRecordRequest:
+      type: object
+      required:
+      - therapeutic_process_id
+      - session_date
+      - attendance
+      - summary
+      - tools
+      properties:
+        therapeutic_process_id:
+          type: string
+          format: uuid
+        session_date:
+          type: string
+          format: date-time
+        attendance:
+          type: boolean
+        summary:
+          type: string
+        tools:
+          type: string
+        new_home_work_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        done_home_work_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+      example: *id024
+    UpdateRecordRequest:
+      type: object
+      properties:
+        session_date:
+          type: string
+          format: date-time
+        attendance:
+          type: boolean
+        summary:
+          type: string
+        tools:
+          type: string
+        new_home_work_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        done_home_work_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+      example: *id025
+    RecordResponse:
+      type: object
+      required:
+      - id
+      - therapeutic_process_id
+      - session_date
+      - attendance
+      - summary
+      - tools
+      - new_home_works
+      - done_home_works
+      properties:
+        id:
+          type: string
+          format: uuid
+        therapeutic_process_id:
+          type: string
+          format: uuid
+        session_date:
+          type: string
+          format: date-time
+        attendance:
+          type: boolean
+        summary:
+          type: string
+        tools:
+          type: string
+        new_home_works:
+          type: array
+          items:
+            $ref: '#/components/schemas/RecordHomeWork'
+        done_home_works:
+          type: array
+          items:
+            $ref: '#/components/schemas/RecordHomeWork'
+      example: *id007
